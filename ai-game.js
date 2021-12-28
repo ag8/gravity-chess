@@ -825,7 +825,7 @@ function evaluate(allPieces, color) {
     for (let piece of allPieces) {
         switch (piece.type) {
             case PAWN:
-                if (piece.col === whiteKingCol()) {
+                if (piece.col === whiteKingCol() && piece.color === 0) {
                     sum += piece.color === color ? 4 * PAWN_VALUE : -4 * PAWN_VALUE;
                 } else {
                     sum += piece.color === color ? PAWN_VALUE : -PAWN_VALUE;
