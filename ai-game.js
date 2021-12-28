@@ -76,16 +76,16 @@ function initGamePieces() {
         pieces.push(new Piece(i, 6, PAWN, 1));
     }
 
-    // pieces.push(new Piece(0, 0, ROOK, 0));
-    // pieces.push(new Piece(1, 0, KNIGHT, 0));
-    // pieces.push(new Piece(2, 0, BISHOP, 0));
+    pieces.push(new Piece(0, 0, ROOK, 0));
+    pieces.push(new Piece(1, 0, KNIGHT, 0));
+    pieces.push(new Piece(2, 0, BISHOP, 0));
     pieces.push(new Piece(3, 0, KING, 0));
     pieces.push(new Piece(4, 0, QUEEN, 0));
-    // pieces.push(new Piece(5, 0, BISHOP, 0));
-    // pieces.push(new Piece(6, 0, KNIGHT, 0));
-    // pieces.push(new Piece(7, 0, ROOK, 0));
+    pieces.push(new Piece(5, 0, BISHOP, 0));
+    pieces.push(new Piece(6, 0, KNIGHT, 0));
+    pieces.push(new Piece(7, 0, ROOK, 0));
 
-    for (let i = 3; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
         pieces.push(new Piece(i, 1, PAWN, 0));
     }
 
