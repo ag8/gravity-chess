@@ -5,8 +5,7 @@ const ROOK = 3;
 const QUEEN = 4;
 const KING = 5;
 
-var depth = window.prompt("What difficulty AI do you want to play? [1: easy, 3: medium, 5: hard]", "3");
-var loaded = false;
+const depth = window.prompt("What difficulty AI do you want to play? [1: easy, 3: medium, 5: hard]", "3");
 
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
@@ -827,7 +826,7 @@ function evaluate(allPieces, color) {
         switch (piece.type) {
             case PAWN:
                 if (piece.col === whiteKingCol()) {
-                    sum += piece.color === color ? 6 * PAWN_VALUE : -6 * PAWN_VALUE;
+                    sum += piece.color === color ? 4 * PAWN_VALUE : -4 * PAWN_VALUE;
                 } else {
                     sum += piece.color === color ? PAWN_VALUE : -PAWN_VALUE;
                 }
@@ -929,7 +928,13 @@ function negamax(currentPieces, depth, alpha, beta, color) {
                 let child_negamax = 0 - negamax(currentPiecesCopy, depth - 1, 0 - beta, 0 - alpha, 1 - color)[0];
                 // let evaluation = Math.max(evaluate(gamePiecesCopy, color), child_negamax);
 
-                if (child_negamax > value) {
+                hehe: if (child_negamax >= value) {
+                    if (child_negamax === value) {
+                        if (Math.random() < 0.5) {
+                            break hehe;
+                        }
+                    }
+
                     value = child_negamax;
                     bestPiece = JSON.parse(JSON.stringify(potentialPiece));
                     bestPiece.row = originalPositionRow;
