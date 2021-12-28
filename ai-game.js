@@ -5,6 +5,7 @@ const ROOK = 3;
 const QUEEN = 4;
 const KING = 5;
 
+var depth = window.prompt("What difficulty AI do you want to play? [1: easy, 3: medium, 5: hard]", "3");
 var loaded = false;
 
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
@@ -945,7 +946,7 @@ function whiteMove() {
     // let gamePiecesString = JSON.stringify(gamePieces);
     // let gamePiecesCopy = JSON.parse(gamePiecesString);Ø
 
-    let [bestEval, piece, moveRow, moveCol] = negamax(gamePieces, 3, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
+    let [bestEval, piece, moveRow, moveCol] = negamax(gamePieces, depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
 
     lastWhiteMovedPieceFromRow = piece.row;
     lastWhiteMovedPieceFromCol = piece.col;
