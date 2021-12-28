@@ -810,13 +810,27 @@ function recordMove(selectedPiece, row, col, capture, oldCol) {
     document.getElementById("game-record").textContent = gameRecord;
 }
 
+function whiteKingCol() {
+    for (let piece of gamePieces) {
+        if (piece.type === KING && piece.color === 0) {
+            return piece.col;
+        }
+    }
+
+    return -1;
+}
+
 function evaluate(allPieces, color) {
     let sum = 0;
 
     for (let piece of allPieces) {
         switch (piece.type) {
             case PAWN:
-                sum += piece.color === color ? PAWN_VALUE : -PAWN_VALUE;
+                if (piece.col === whiteKingCol()) {
+                    sum += piece.color === color ? 6 * PAWN_VALUE : -6 * PAWN_VALUE;
+                } else {
+                    sum += piece.color === color ? PAWN_VALUE : -PAWN_VALUE;
+                }
                 break;
             case ROOK:
                 sum += piece.color === color ? ROOK_VALUE : -ROOK_VALUE;
