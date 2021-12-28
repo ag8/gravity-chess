@@ -899,6 +899,23 @@ function whiteMove() {
     recordMove(piece, moveRow, moveCol, capture, oldCol);
 }
 
+function whiteMoveAndUpdateGravityAndBoard() {
+    turn = 1 - turn;
+    whiteMove();
+    turn = 1 - turn;
+    updateGravity(gamePieces);
+    updateBoard();
+}
+
+const updateAndWhiteMove = async () => {
+    (function(next) {
+        updateBoard();
+        next()
+    }(function() {
+        setTimeout(whiteMoveAndUpdateGravityAndBoard, 100);
+    }))
+};
+
 canvas.addEventListener('mousedown', function (e) {
     let [x, y] = getCursorPosition(canvas, e);
 
@@ -933,12 +950,11 @@ canvas.addEventListener('mousedown', function (e) {
 
             recordMove(selectedPiece, row, col, capture, oldCol);
 
-            turn = 1 - turn;
+            // turn = 1 - turn;
 
-            whiteMove();
-            updateGravity(gamePieces);
+            updateAndWhiteMove();
 
-            turn = 1 - turn;
+            // turn = 1 - turn;
         }
 
         selectedPiece = null;
