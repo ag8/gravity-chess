@@ -889,7 +889,7 @@ function negamax(currentPieces, depth, alpha, beta, color) {
     // console.log(p(depth) + "Negamax depth " + depth + ".");
     // console.log(p(depth) + "Current board: " + boardify(currentPieces));
 
-    if (depth === 0) {
+    if (depth === 0 || gameOver(currentPieces)) {
         // console.log(p(depth) + "Eval: " + evaluate(currentPieces, color));
         return [evaluate(currentPieces, color), null, null, null];
     }
@@ -997,10 +997,10 @@ const updateAndWhiteMove = async () => {
     }))
 };
 
-function gameOver() {
+function gameOver(pieces) {
     let numKings = 0;
 
-    for (let piece of gamePieces) {
+    for (let piece of pieces) {
         if (piece.type === KING) {
             numKings++;
         }
@@ -1010,7 +1010,7 @@ function gameOver() {
 }
 
 canvas.addEventListener('mousedown', function (e) {
-    if (gameOver()) {
+    if (gameOver(gamePieces)) {
         console.log("Game over!");
         return false;
     }
