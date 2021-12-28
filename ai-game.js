@@ -814,7 +814,7 @@ function getPieceColor(piece) {
     return piece.color === 0 ? "White" : "Black";
 }
 
-function negamax(currentPieces, depth, color) {
+function negamax(currentPieces, depth, alpha, beta, color) {
     // console.log(p(depth) + "Negamax depth " + depth + ".");
     // console.log(p(depth) + "Current board: " + boardify(currentPieces));
 
@@ -831,43 +831,50 @@ function negamax(currentPieces, depth, color) {
     let bestTarget = null;
     let value = Number.NEGATIVE_INFINITY;
 
-    for (let potentialPiece of anotherPiecesCopy) {
-        if (potentialPiece.color !== color) {  // Can't move wrong pieces!
-            continue;
-        }
-
-        // Save the old position of this piece
-        let originalPositionRow = potentialPiece.row;
-        let originalPositionCol = potentialPiece.col;
-
-        let legalMoves = getLegalMoves(potentialPiece, currentPiecesCopy);
-
-        for (let potentialMove of legalMoves) {
-            // console.log(p(depth) + "Trying move " + getPieceColor(potentialPiece) + " " + getPieceName(potentialPiece) + " to " + getCoordsName(potentialMove[0], potentialMove[1]) + ".");
-
-            // Make this move and see what happens
-            let realPieceToMove = getEquivalentPiece(potentialPiece, currentPiecesCopy);
-            let [capture, oldCol, newPieces] = movePiece(realPieceToMove, potentialMove[0], potentialMove[1], currentPiecesCopy);
-            currentPiecesCopy = newPieces;
-
-            updateGravity(currentPiecesCopy);
-
-            // Evaluate the result
-            let child_negamax = 0 - negamax(currentPiecesCopy, depth - 1, 1 - color)[0];
-            // let evaluation = Math.max(evaluate(gamePiecesCopy, color), child_negamax);
-
-            if (child_negamax > value) {
-                value = child_negamax;
-                bestPiece = JSON.parse(JSON.stringify(potentialPiece));
-                bestPiece.row = originalPositionRow;
-                bestPiece.col = originalPositionCol;
-                bestTarget = potentialMove;
+    dance:
+        for (let potentialPiece of anotherPiecesCopy) {
+            if (potentialPiece.color !== color) {  // Can't move wrong pieces!
+                continue;
             }
 
-            // Reset the board
-            currentPiecesCopy = JSON.parse(currentPiecesString);
+            // Save the old position of this piece
+            let originalPositionRow = potentialPiece.row;
+            let originalPositionCol = potentialPiece.col;
+
+            let legalMoves = getLegalMoves(potentialPiece, currentPiecesCopy);
+
+            for (let potentialMove of legalMoves) {
+                // console.log(p(depth) + "Trying move " + getPieceColor(potentialPiece) + " " + getPieceName(potentialPiece) + " to " + getCoordsName(potentialMove[0], potentialMove[1]) + ".");
+
+                // Make this move and see what happens
+                let realPieceToMove = getEquivalentPiece(potentialPiece, currentPiecesCopy);
+                let [capture, oldCol, newPieces] = movePiece(realPieceToMove, potentialMove[0], potentialMove[1], currentPiecesCopy);
+                currentPiecesCopy = newPieces;
+
+                updateGravity(currentPiecesCopy);
+
+                // Evaluate the result
+                let child_negamax = 0 - negamax(currentPiecesCopy, depth - 1, 0 - beta, 0 - alpha, 1 - color)[0];
+                // let evaluation = Math.max(evaluate(gamePiecesCopy, color), child_negamax);
+
+                if (child_negamax > value) {
+                    value = child_negamax;
+                    bestPiece = JSON.parse(JSON.stringify(potentialPiece));
+                    bestPiece.row = originalPositionRow;
+                    bestPiece.col = originalPositionCol;
+                    bestTarget = potentialMove;
+
+                    alpha = Math.max(alpha, value);
+                    if (alpha >= beta) {
+                        break dance;
+                    }
+
+                }
+
+                // Reset the board
+                currentPiecesCopy = JSON.parse(currentPiecesString);
+            }
         }
-    }
 
     let piece = getEquivalentPiece(bestPiece, currentPieces);
     let moveRow = bestTarget[0];
@@ -884,7 +891,7 @@ function whiteMove() {
     // let gamePiecesString = JSON.stringify(gamePieces);
     // let gamePiecesCopy = JSON.parse(gamePiecesString);Ø
 
-    let [bestEval, piece, moveRow, moveCol] = negamax(gamePieces, 3, 0);
+    let [bestEval, piece, moveRow, moveCol] = negamax(gamePieces, 5, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
 
     lastWhiteMovedPieceFromRow = piece.row;
     lastWhiteMovedPieceFromCol = piece.col;
@@ -908,10 +915,10 @@ function whiteMoveAndUpdateGravityAndBoard() {
 }
 
 const updateAndWhiteMove = async () => {
-    (function(next) {
+    (function (next) {
         updateBoard();
         next()
-    }(function() {
+    }(function () {
         setTimeout(whiteMoveAndUpdateGravityAndBoard, 100);
     }))
 };
