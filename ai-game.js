@@ -76,16 +76,16 @@ function initGamePieces() {
         pieces.push(new Piece(i, 6, PAWN, 1));
     }
 
-    pieces.push(new Piece(0, 0, ROOK, 0));
-    pieces.push(new Piece(1, 0, KNIGHT, 0));
-    pieces.push(new Piece(2, 0, BISHOP, 0));
+    // pieces.push(new Piece(0, 0, ROOK, 0));
+    // pieces.push(new Piece(1, 0, KNIGHT, 0));
+    // pieces.push(new Piece(2, 0, BISHOP, 0));
     pieces.push(new Piece(3, 0, KING, 0));
     pieces.push(new Piece(4, 0, QUEEN, 0));
-    pieces.push(new Piece(5, 0, BISHOP, 0));
-    pieces.push(new Piece(6, 0, KNIGHT, 0));
-    pieces.push(new Piece(7, 0, ROOK, 0));
+    // pieces.push(new Piece(5, 0, BISHOP, 0));
+    // pieces.push(new Piece(6, 0, KNIGHT, 0));
+    // pieces.push(new Piece(7, 0, ROOK, 0));
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 3; i < 5; i++) {
         pieces.push(new Piece(i, 1, PAWN, 0));
     }
 
@@ -498,6 +498,18 @@ function getLegalMoves(piece, allPieces) {
     return legalMoves;
 }
 
+function inCheck(king) {
+    for (let piece of gamePieces) {
+        for (let move of getLegalMoves(piece, gamePieces)) {
+            if (move[0] === king.row && move[1] === king.col) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 function updateBoard(selectedPiece) {
     drawBoard();
 
@@ -523,6 +535,11 @@ function updateBoard(selectedPiece) {
             }
 
             legalMoves.forEach(highlightLegalMove)
+        }
+
+        if (piece.type === KING && inCheck(piece)) {
+            ctx.fillStyle = '#ff4c4c';
+            ctx.fillRect(piece.col * SIZE, piece.row * SIZE, SIZE, SIZE);
         }
 
         if (piece === selectedPiece) {
@@ -694,6 +711,39 @@ let state = 0;
 turn = 0;
 let selectedPiece = null;
 
+function askForPromotion() {
+    console.log("PROMOTING");
+
+    let valid = ["queen", "rook", "bishop", "knight"];
+    let valid2 = ["q", "r", "b", "n"];
+
+    let answer = "";
+
+    do {
+        answer = window.prompt("Which piece to promote to?", "Queen");
+    } while (!(valid.includes(answer.toLocaleLowerCase()) || valid2.includes(answer.toLocaleLowerCase())));
+
+    switch (answer.toLocaleLowerCase()) {
+        case "queen":
+            return QUEEN;
+        case "q":
+            return QUEEN;
+        case "rook":
+            return ROOK;
+        case "r":
+            return ROOK;
+        case "bishop":
+            return BISHOP;
+        case "b":
+            return BISHOP;
+        case "knight":
+            return KNIGHT;
+        case "n":
+            return KNIGHT;
+    }
+}
+
+
 function movePiece(piece, toRow, toCol, allPieces) {
     let numPieces = allPieces.length;
 
@@ -707,6 +757,13 @@ function movePiece(piece, toRow, toCol, allPieces) {
     piece.row = toRow;
     piece.col = toCol;
 
+    // Check if the piece is a promoted pawn
+    if (piece.color === 0 && piece.row === 7 && piece.type === PAWN && allPieces === gamePieces) {
+        piece.type = askForPromotion();
+    } else if (piece.color === 1 && piece.row === 0 && piece.type === PAWN && allPieces === gamePieces) {
+        piece.type = askForPromotion();
+    }
+
     return [numPieces > allPieces.length, oldCol, allPieces];
 }
 
@@ -718,14 +775,14 @@ function getPieceName(piece, capture, oldCol) {
         if (!capture) {
             return "";
         } else {
-            return getCoordsName(selectedPiece.row, oldCol)[0];
+            return getCoordsName(piece.row, oldCol)[0];
         }
     } else if (piece.type === ROOK) {
-        return "R";
+        return "R(" + getCoordsName(piece.row, piece.col) + ")";
     } else if (piece.type === KNIGHT) {
-        return "N";
+        return "N(" + getCoordsName(piece.row, piece.col) + ")";
     } else if (piece.type === BISHOP) {
-        return "B";
+        return "B(" + getCoordsName(piece.row, piece.col) + ")";
     } else if (piece.type === QUEEN) {
         return "Q";
     } else if (piece.type === KING) {
@@ -881,9 +938,6 @@ function negamax(currentPieces, depth, alpha, beta, color) {
     let moveCol = bestTarget[1];
 
     // console.log(p(depth) + "Best evaluation: " + value);
-
-    let coeff = color === 0 ? -1 : 1;
-
     return [value, piece, moveRow, moveCol];
 }
 
@@ -891,7 +945,7 @@ function whiteMove() {
     // let gamePiecesString = JSON.stringify(gamePieces);
     // let gamePiecesCopy = JSON.parse(gamePiecesString);Ø
 
-    let [bestEval, piece, moveRow, moveCol] = negamax(gamePieces, 5, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
+    let [bestEval, piece, moveRow, moveCol] = negamax(gamePieces, 3, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
 
     lastWhiteMovedPieceFromRow = piece.row;
     lastWhiteMovedPieceFromCol = piece.col;
@@ -923,7 +977,24 @@ const updateAndWhiteMove = async () => {
     }))
 };
 
+function gameOver() {
+    let numKings = 0;
+
+    for (let piece of gamePieces) {
+        if (piece.type === KING) {
+            numKings++;
+        }
+    }
+
+    return numKings !== 2;
+}
+
 canvas.addEventListener('mousedown', function (e) {
+    if (gameOver()) {
+        console.log("Game over!");
+        return false;
+    }
+
     let [x, y] = getCursorPosition(canvas, e);
 
     // console.log("You clicked on " + x + ", " + y);
