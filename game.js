@@ -80,7 +80,7 @@ function initGamePieces() {
     return pieces;
 }
 
-gamePieces = initGamePieces();
+let gamePieces = initGamePieces();
 
 
 function checkmate() {
@@ -668,8 +668,25 @@ var state = 0;
 var turn = 0;
 var selectedPiece = null;
 
+// function movePiece(piece, toRow, toCol) {
+//     let numPieces = gamePieces.length;
+//
+//     // First, check for immediate captures
+//     if (getPieceOn(toRow, toCol) != null) {
+//         gamePieces = gamePieces.filter(piece => !(piece.row === getPieceOn(toRow, toCol).row && piece.col === getPieceOn(toRow, toCol).col))
+//     }
+//
+//     let oldCol = piece.col;
+//
+//     piece.row = toRow;
+//     piece.col = toCol;
+//
+//     return [numPieces > gamePieces.length, oldCol];
+// }
+
 function movePiece(piece, toRow, toCol) {
     let numPieces = gamePieces.length;
+    let special = "";
 
     // First, check for immediate captures
     if (getPieceOn(toRow, toCol) != null) {
@@ -681,50 +698,131 @@ function movePiece(piece, toRow, toCol) {
     piece.row = toRow;
     piece.col = toCol;
 
-    return [numPieces > gamePieces.length, oldCol];
+    // Check if the piece is a promoted pawn
+    if (piece.color === 0 && piece.row === 7 && piece.type === PAWN || piece.color === 1 && piece.row === 0 && piece.type === PAWN) {
+        piece.type = askForPromotion();
+        if (numPieces <= gamePieces.length) {
+            special = getCoordsName(piece.row, piece.col) + "=" + getPieceName(piece, 0, 0).substring(0, 1);
+        } else {
+            special = getCoordsName(piece.row, oldCol).substring(0, 1) + "x" + getCoordsName(piece.row, piece.col) + "=" + getPieceName(piece, 0, 0).substring(0, 1);
+        }
+    }
+
+    return [numPieces > gamePieces.length, oldCol, special];
 }
 
 var move = 1;
 var gameRecord = "";
 
-function recordMove(selectedPiece, row, col, capture, oldCol) {
-    function getPieceName(piece) {
-        if (piece.type === PAWN) {
-            if (!capture) {
-                return "";
-            } else {
-                return getCoordsName(selectedPiece.row, oldCol)[0];
-            }
-        } else if (piece.type === ROOK) {
-            return "R";
-        } else if (piece.type === KNIGHT) {
-            return "N";
-        } else if (piece.type === BISHOP) {
-            return "B";
-        } else if (piece.type === QUEEN) {
-            return "Q";
-        } else if (piece.type === KING) {
-            return "K";
-        }
-    }
-
-    function getCoordsName(row, col) {
-        return ["a", "b", "c", "d", "e", "f", "g", "h"].reverse()[col] + "" + (row - (0 - 1));
-    }
-
-    let pieceName = getPieceName(selectedPiece);
+// function recordMove(selectedPiece, row, col, capture, oldCol) {
+//     function getPieceName(piece) {
+//         if (piece.type === PAWN) {
+//             if (!capture) {
+//                 return "";
+//             } else {
+//                 return getCoordsName(selectedPiece.row, oldCol)[0];
+//             }
+//         } else if (piece.type === ROOK) {
+//             return "R";
+//         } else if (piece.type === KNIGHT) {
+//             return "N";
+//         } else if (piece.type === BISHOP) {
+//             return "B";
+//         } else if (piece.type === QUEEN) {
+//             return "Q";
+//         } else if (piece.type === KING) {
+//             return "K";
+//         }
+//     }
+//
+//     function getCoordsName(row, col) {
+//         return ["a", "b", "c", "d", "e", "f", "g", "h"].reverse()[col] + "" + (row - (0 - 1));
+//     }
+//
+//     let pieceName = getPieceName(selectedPiece);
+//     let coordsName = getCoordsName(row, col);
+//     let captureName = capture ? "x" : "";
+//
+//     if (turn === 0) {
+//         gameRecord += move + ". " + pieceName + "" + captureName + "" + coordsName + " ";
+//     } else {
+//         gameRecord += pieceName + "" + captureName + "" + coordsName + " ";
+//         move++;
+//     }
+//
+//     document.getElementById("game-record").textContent = gameRecord;
+// }
+function recordMove(selectedPiece, row, col, capture, oldCol, special) {
+    let pieceName = getPieceName(selectedPiece, capture, oldCol);
     let coordsName = getCoordsName(row, col);
     let captureName = capture ? "x" : "";
 
     if (turn === 0) {
-        gameRecord += move + ". " + pieceName + "" + captureName + "" + coordsName + " ";
+        gameRecord += special.length === 0 ? move + ". " + pieceName + "" + captureName + "" + coordsName + " " : special;
     } else {
-        gameRecord += pieceName + "" + captureName + "" + coordsName + " ";
+        gameRecord += special.length === 0 ? pieceName + "" + captureName + "" + coordsName + " " : special;
         move++;
     }
 
     document.getElementById("game-record").textContent = gameRecord;
 }
+
+function getPieceName(piece, capture, oldCol) {
+    if (piece.type === PAWN) {
+        if (!capture) {
+            return "";
+        } else {
+            return getCoordsName(piece.row, oldCol)[0];
+        }
+    } else if (piece.type === ROOK) {
+        return "R(" + getCoordsName(piece.row, piece.col) + ")";
+    } else if (piece.type === KNIGHT) {
+        return "N(" + getCoordsName(piece.row, piece.col) + ")";
+    } else if (piece.type === BISHOP) {
+        return "B(" + getCoordsName(piece.row, piece.col) + ")";
+    } else if (piece.type === QUEEN) {
+        return "Q";
+    } else if (piece.type === KING) {
+        return "K";
+    }
+}
+
+function getCoordsName(row, col) {
+    return ["a", "b", "c", "d", "e", "f", "g", "h"].reverse()[col] + "" + (row - (0 - 1));
+}
+
+function askForPromotion() {
+    console.log("PROMOTING");
+
+    let valid = ["queen", "rook", "bishop", "knight"];
+    let valid2 = ["q", "r", "b", "n"];
+
+    let answer = "";
+
+    do {
+        answer = window.prompt("Which piece to promote to?", "Queen");
+    } while (!(valid.includes(answer.toLocaleLowerCase()) || valid2.includes(answer.toLocaleLowerCase())));
+
+    switch (answer.toLocaleLowerCase()) {
+        case "queen":
+            return QUEEN;
+        case "q":
+            return QUEEN;
+        case "rook":
+            return ROOK;
+        case "r":
+            return ROOK;
+        case "bishop":
+            return BISHOP;
+        case "b":
+            return BISHOP;
+        case "knight":
+            return KNIGHT;
+        case "n":
+            return KNIGHT;
+    }
+}
+
 
 canvas.addEventListener('mousedown', function (e) {
     let [x, y] = getCursorPosition(canvas, e);
@@ -753,11 +851,11 @@ canvas.addEventListener('mousedown', function (e) {
         console.log(getLegalMoves(selectedPiece));
 
         if (getLegalMoves(selectedPiece).some(a => [row, col].every((v, i) => v === a[i]))) {
-            let [capture, oldCol] = movePiece(selectedPiece, row, col);
+            let [capture, oldCol, special] = movePiece(selectedPiece, row, col);
 
             updateGravity();
 
-            recordMove(selectedPiece, row, col, capture, oldCol);
+            recordMove(selectedPiece, row, col, capture, oldCol, special);
 
             turn = 1 - turn;
         }
