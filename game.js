@@ -5,8 +5,6 @@ const ROOK = 3;
 const QUEEN = 4;
 const KING = 5;
 
-var loaded = false;
-
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
 }))).then(() => {
@@ -82,22 +80,8 @@ function initGamePieces() {
 
 let gamePieces = initGamePieces();
 
-
-function checkmate() {
-    return false;
-}
-
 // The actual game code
 player = 1;
-
-// while (!checkmate()) {
-//     {
-//         player = 1 - player;
-//
-//         // Draw the board
-//         drawBoard();
-//     }
-// }
 
 function loadBoard() {
     updateBoard();
@@ -305,11 +289,10 @@ function getLegalMoves(piece) {
             }
         }
     }
-
     if (piece.type === BISHOP) {
         for (let i = 1; i < 10; i++) {
-            newRow = row + i;
-            newCol = col + i;
+            let newRow = row + i;
+            let newCol = col + i;
 
             if (!onBoard(newRow, newCol)) {
                 break;
@@ -329,8 +312,8 @@ function getLegalMoves(piece) {
             }
         }
         for (let i = 1; i < 10; i++) {
-            newRow = row + i;
-            newCol = col - i;
+            let newRow = row + i;
+            let newCol = col - i;
 
             if (!onBoard(newRow, newCol)) {
                 break;
@@ -350,8 +333,8 @@ function getLegalMoves(piece) {
             }
         }
         for (let i = 1; i < 10; i++) {
-            newRow = row - i;
-            newCol = col + i;
+            let newRow = row - i;
+            let newCol = col + i;
 
             if (!onBoard(newRow, newCol)) {
                 break;
@@ -371,8 +354,8 @@ function getLegalMoves(piece) {
             }
         }
         for (let i = 1; i < 10; i++) {
-            newRow = row - i;
-            newCol = col - i;
+            let newRow = row - i;
+            let newCol = col - i;
 
             if (!onBoard(newRow, newCol)) {
                 break;
@@ -393,10 +376,10 @@ function getLegalMoves(piece) {
         }
     }
     if (piece.type === QUEEN) {
-        pieceCopy = JSON.parse(JSON.stringify(piece));
+        let pieceCopy = JSON.parse(JSON.stringify(piece));
         pieceCopy.type = ROOK;
         legalMoves = legalMoves.concat(getLegalMoves(pieceCopy));
-        pieceCopy2 = JSON.parse(JSON.stringify(piece));
+        let pieceCopy2 = JSON.parse(JSON.stringify(piece));
         pieceCopy2.type = BISHOP;
         legalMoves = legalMoves.concat(getLegalMoves(pieceCopy2));
     }
@@ -534,9 +517,9 @@ function drawBoard() {
     }
 }
 
-function get_image_scale(image) {
-    w = (black_pawn_image.width / 128 * SIZE);
-    h = (black_pawn_image.height / 128 * SIZE);
+function get_image_scale() {
+    let w = (black_pawn_image.width / 128 * SIZE);
+    let h = (black_pawn_image.height / 128 * SIZE);
 
     return [w, h]
 }
@@ -548,72 +531,72 @@ function drawPiece(piece) {
             image = black_pawn_image;
         }
 
-        let [w, h] = get_image_scale(image);
+        let [w, h] = get_image_scale();
 
-        offsetw = piece.col * SIZE;
-        offseth = piece.row * SIZE;
+        let offsetW = piece.col * SIZE;
+        let offsetH = piece.row * SIZE;
 
-        ctx.drawImage(image, offsetw + 0.2 * w, offseth + 0.1 * h, 0.8 * w, 0.8 * h);
+        ctx.drawImage(image, offsetW + 0.2 * w, offsetH + 0.1 * h, 0.8 * w, 0.8 * h);
     } else if (piece.type === ROOK) {
         let image = white_rook_image;
         if (piece.color === 1) {
             image = black_rook_image;
         }
 
-        let [w, h] = get_image_scale(image);
+        let [w, h] = get_image_scale();
 
-        offsetw = piece.col * SIZE;
-        offseth = piece.row * SIZE;
+        let offsetW = piece.col * SIZE;
+        let offsetH = piece.row * SIZE;
 
-        ctx.drawImage(image, offsetw + 0.2 * w, offseth + 0.1 * h, 0.8 * w, 0.8 * h);
+        ctx.drawImage(image, offsetW + 0.2 * w, offsetH + 0.1 * h, 0.8 * w, 0.8 * h);
     } else if (piece.type === KNIGHT) {
         let image = white_knight_image;
         if (piece.color === 1) {
             image = black_knight_image;
         }
 
-        let [w, h] = get_image_scale(image);
+        let [w, h] = get_image_scale();
 
-        offsetw = piece.col * SIZE;
-        offseth = piece.row * SIZE;
+        let offsetW = piece.col * SIZE;
+        let offsetH = piece.row * SIZE;
 
-        ctx.drawImage(image, offsetw + 0.2 * w, offseth + 0.1 * h, 0.8 * w, 0.8 * h);
+        ctx.drawImage(image, offsetW + 0.2 * w, offsetH + 0.1 * h, 0.8 * w, 0.8 * h);
     } else if (piece.type === BISHOP) {
         let image = white_bishop_image;
         if (piece.color === 1) {
             image = black_bishop_image;
         }
 
-        let [w, h] = get_image_scale(image);
+        let [w, h] = get_image_scale();
 
-        offsetw = piece.col * SIZE;
-        offseth = piece.row * SIZE;
+        let offsetW = piece.col * SIZE;
+        let offsetH = piece.row * SIZE;
 
-        ctx.drawImage(image, offsetw + 0.2 * w, offseth + 0.1 * h, 0.8 * w, 0.8 * h);
+        ctx.drawImage(image, offsetW + 0.2 * w, offsetH + 0.1 * h, 0.8 * w, 0.8 * h);
     } else if (piece.type === QUEEN) {
         let image = white_queen_image;
         if (piece.color === 1) {
             image = black_queen_image;
         }
 
-        let [w, h] = get_image_scale(image);
+        let [w, h] = get_image_scale();
 
-        offsetw = piece.col * SIZE;
-        offseth = piece.row * SIZE;
+        let offsetW = piece.col * SIZE;
+        let offsetH = piece.row * SIZE;
 
-        ctx.drawImage(image, offsetw + 0.2 * w, offseth + 0.1 * h, 0.8 * w, 0.8 * h);
+        ctx.drawImage(image, offsetW + 0.2 * w, offsetH + 0.1 * h, 0.8 * w, 0.8 * h);
     } else if (piece.type === KING) {
         let image = white_king_image;
         if (piece.color === 1) {
             image = black_king_image;
         }
 
-        let [w, h] = get_image_scale(image);
+        let [w, h] = get_image_scale();
 
-        offsetw = piece.col * SIZE;
-        offseth = piece.row * SIZE;
+        let offsetW = piece.col * SIZE;
+        let offsetH = piece.row * SIZE;
 
-        ctx.drawImage(image, offsetw + 0.2 * w, offseth + 0.1 * h, 0.8 * w, 0.8 * h);
+        ctx.drawImage(image, offsetW + 0.2 * w, offsetH + 0.1 * h, 0.8 * w, 0.8 * h);
     }
 }
 
@@ -627,10 +610,10 @@ function getCursorPosition(canvas, event) {
 function getSelectedPiece(x, y) {
     for (const piece of gamePieces) {
         // Figure out this piece's square bounds
-        lowX = SIZE * piece.col;
-        lowY = SIZE * piece.row;
-        highX = lowX + SIZE;
-        highY = lowY + SIZE;
+        let lowX = SIZE * piece.col;
+        let lowY = SIZE * piece.row;
+        let highX = lowX + SIZE;
+        let highY = lowY + SIZE;
 
         if (lowX < x && x < highX && lowY < y && y < highY) {
             return piece;
@@ -664,25 +647,9 @@ function updateGravity() {
     }
 }
 
-var state = 0;
-var turn = 0;
-var selectedPiece = null;
-
-// function movePiece(piece, toRow, toCol) {
-//     let numPieces = gamePieces.length;
-//
-//     // First, check for immediate captures
-//     if (getPieceOn(toRow, toCol) != null) {
-//         gamePieces = gamePieces.filter(piece => !(piece.row === getPieceOn(toRow, toCol).row && piece.col === getPieceOn(toRow, toCol).col))
-//     }
-//
-//     let oldCol = piece.col;
-//
-//     piece.row = toRow;
-//     piece.col = toCol;
-//
-//     return [numPieces > gamePieces.length, oldCol];
-// }
+let state = 0;
+let turn = 0;
+let selectedPiece = null;
 
 function movePiece(piece, toRow, toCol) {
     let numPieces = gamePieces.length;
@@ -711,60 +678,56 @@ function movePiece(piece, toRow, toCol) {
     return [numPieces > gamePieces.length, oldCol, special];
 }
 
-var move = 1;
-var gameRecord = "";
+let move = 1;
+let gameRecord = "";
 
-// function recordMove(selectedPiece, row, col, capture, oldCol) {
-//     function getPieceName(piece) {
-//         if (piece.type === PAWN) {
-//             if (!capture) {
-//                 return "";
-//             } else {
-//                 return getCoordsName(selectedPiece.row, oldCol)[0];
-//             }
-//         } else if (piece.type === ROOK) {
-//             return "R";
-//         } else if (piece.type === KNIGHT) {
-//             return "N";
-//         } else if (piece.type === BISHOP) {
-//             return "B";
-//         } else if (piece.type === QUEEN) {
-//             return "Q";
-//         } else if (piece.type === KING) {
-//             return "K";
-//         }
-//     }
-//
-//     function getCoordsName(row, col) {
-//         return ["a", "b", "c", "d", "e", "f", "g", "h"].reverse()[col] + "" + (row - (0 - 1));
-//     }
-//
-//     let pieceName = getPieceName(selectedPiece);
-//     let coordsName = getCoordsName(row, col);
-//     let captureName = capture ? "x" : "";
-//
-//     if (turn === 0) {
-//         gameRecord += move + ". " + pieceName + "" + captureName + "" + coordsName + " ";
-//     } else {
-//         gameRecord += pieceName + "" + captureName + "" + coordsName + " ";
-//         move++;
-//     }
-//
-//     document.getElementById("game-record").textContent = gameRecord;
-// }
+
 function recordMove(selectedPiece, row, col, capture, oldCol, special) {
-    let pieceName = getPieceName(selectedPiece, capture, oldCol);
-    let coordsName = getCoordsName(row, col);
-    let captureName = capture ? "x" : "";
+    let pieceName = getPieceName(selectedPiece, capture, oldCol), coordsName = getCoordsName(row, col),
+        captureName = capture ? "x" : "", currentMoveRecord;
 
     if (turn === 0) {
-        gameRecord += special.length === 0 ? move + ". " + pieceName + "" + captureName + "" + coordsName + " " : special;
+        currentMoveRecord = special.length === 0 ? move + ". " + pieceName + "" + captureName + "" + coordsName + " " : special;
     } else {
-        gameRecord += special.length === 0 ? pieceName + "" + captureName + "" + coordsName + " " : special;
+        currentMoveRecord = special.length === 0 ? pieceName + "" + captureName + "" + coordsName + " " : special;
         move++;
     }
 
-    document.getElementById("game-record").textContent = gameRecord;
+    let winner = gameOver();
+
+    if (winner === 1) {
+        currentMoveRecord += " 0–1"
+    } else if (winner === 0) {
+        currentMoveRecord += " 1–0"
+    }
+
+    gameRecord += currentMoveRecord;
+
+
+    let div = document.createElement("div");
+    div.className = "move-record";
+    div.innerHTML = currentMoveRecord;
+
+    document.getElementById("game-record-flex").appendChild(div);
+}
+
+function gameOver() {
+    /**
+     * Returns the loser
+     * @type {number}
+     */
+
+    let numKings = 0;
+    let winner = -1;
+
+    for (let piece of gamePieces) {
+        if (piece.type === KING) {
+            numKings++;
+            winner = piece.color;
+        }
+    }
+
+    return numKings === 2 ? -1 : winner;
 }
 
 function getPieceName(piece, capture, oldCol) {
