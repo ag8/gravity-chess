@@ -105,7 +105,7 @@ function structuredClone(a) {  // polyfill
     return JSON.parse(JSON.stringify(a));
 }
 
-function getLegalMoves(piece, pieces, simulated=false) {
+function getLegalMoves(piece, pieces, simulated = false) {
     let legalMoves = [];
 
     let row = piece.row;
@@ -123,14 +123,18 @@ function getLegalMoves(piece, pieces, simulated=false) {
                 }
             }
 
-            if (getPieceOn(row + 1, col + 1, pieces) != null) {
-                if (getPieceOn(row + 1, col + 1, pieces).color === 1) {
+            if (getPieceOn(row + 1, col + 1, pieces) != null || (row + 1 === enPassantTargetRow && col + 1 === enPassantTargetCol && enPassantAllowed)) {
+                if (getPieceOn(row + 1, col + 1, pieces) == null) { // en passant
+                    legalMoves.push([row + 1, col + 1]);
+                } else if (getPieceOn(row + 1, col + 1, pieces).color === 1) {
                     legalMoves.push([row + 1, col + 1]);
                 }
             }
 
-            if (getPieceOn(row + 1, col - 1, pieces) != null) {
-                if (getPieceOn(row + 1, col - 1, pieces).color === 1) {
+            if (getPieceOn(row + 1, col - 1, pieces) != null || (row + 1 === enPassantTargetRow && col - 1 === enPassantTargetCol && enPassantAllowed)) {
+                if (getPieceOn(row + 1, col - 1, pieces) == null) { // en passant
+                    legalMoves.push([row + 1, col - 1]);
+                } else if (getPieceOn(row + 1, col - 1, pieces).color === 1) {
                     legalMoves.push([row + 1, col - 1]);
                 }
             }
@@ -145,14 +149,18 @@ function getLegalMoves(piece, pieces, simulated=false) {
                 }
             }
 
-            if (getPieceOn(row - 1, col + 1, pieces) != null) {
-                if (getPieceOn(row - 1, col + 1, pieces).color === 0) {
+            if (getPieceOn(row - 1, col + 1, pieces) != null || (row - 1 === enPassantTargetRow && col + 1 === enPassantTargetCol && enPassantAllowed)) {
+                if (getPieceOn(row - 1, col + 1, pieces) == null) { // en passant
+                    legalMoves.push([row - 1, col + 1]);
+                } else if (getPieceOn(row - 1, col + 1, pieces).color === 0) {
                     legalMoves.push([row - 1, col + 1]);
                 }
             }
 
-            if (getPieceOn(row - 1, col - 1, pieces) != null) {
-                if (getPieceOn(row - 1, col - 1, pieces).color === 0) {
+            if (getPieceOn(row - 1, col - 1, pieces) != null || (row - 1 === enPassantTargetRow && col - 1 === enPassantTargetCol && enPassantAllowed)) {
+                if (getPieceOn(row - 1, col - 1, pieces) == null) { // en passant
+                    legalMoves.push([row - 1, col - 1]);
+                } else if (getPieceOn(row - 1, col - 1, pieces).color === 0) {
                     legalMoves.push([row - 1, col - 1]);
                 }
             }
@@ -731,6 +739,12 @@ let selectedPiece = null;
 //     return [numPieces > gamePieces.length, oldCol, special];
 // }
 
+let enPassantTargetRow;
+let enPassantTargetCol;
+let enPassantVictimRow;
+let enPassantVictimCol;
+let enPassantAllowed = false;
+
 function movePiece(piece, toRow, toCol, pieces) {
     let numPieces = pieces.length;
     let special = "";
@@ -739,12 +753,27 @@ function movePiece(piece, toRow, toCol, pieces) {
     if (getPieceOn(toRow, toCol, pieces) != null) {
         pieces = pieces.filter(piece => !(piece.row === getPieceOn(toRow, toCol, pieces).row && piece.col === getPieceOn(toRow, toCol, pieces).col))
     }
+    // Then, check for the french move
+    if (enPassantAllowed && toRow === enPassantTargetRow && toCol === enPassantTargetCol) {
+        pieces = pieces.filter(piece => !(piece.row === enPassantVictimRow && piece.col === enPassantVictimCol))
+    }
 
     let oldCol = piece.col;
     let oldRow = piece.row;
 
     piece.row = toRow;
     piece.col = toCol;
+
+    // Check if the piece is a pawn that went two squares
+    if (piece.type === PAWN && Math.abs(piece.row - oldRow) === 2) {
+        enPassantAllowed = true;
+        enPassantTargetCol = piece.col;
+        enPassantTargetRow = (piece.row + oldRow) / 2;
+        enPassantVictimCol = piece.col;
+        enPassantVictimRow = piece.row;
+    } else {
+        enPassantAllowed = false;
+    }
 
     // Check if the piece is a promoted pawn
     if (piece.color === 0 && piece.row === 7 && piece.type === PAWN || piece.color === 1 && piece.row === 0 && piece.type === PAWN) {

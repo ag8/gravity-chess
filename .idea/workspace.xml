@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="theory is working">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="theory is working!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theory.html" beforeDir="false" afterPath="$PROJECT_DIR$/theory.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theory.js" beforeDir="false" afterPath="$PROJECT_DIR$/theory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/game.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +119,7 @@
       <recent name="C:\development\gravity-chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.theory.html">
+  <component name="RunManager" selected="JavaScript Debug.index.html">
     <configuration name="ai.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/ai.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -135,9 +134,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="JavaScript Debug.theory.html" />
         <item itemvalue="JavaScript Debug.minimal.html" />
-        <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="JavaScript Debug.ai.html" />
       </list>
     </recent_temporary>
@@ -157,7 +156,7 @@
       <workItem from="1640410139679" duration="1805000" />
       <workItem from="1640458880149" duration="1904000" />
       <workItem from="1640637209379" duration="1543000" />
-      <workItem from="1657397197832" duration="17658000" />
+      <workItem from="1657397197832" duration="19551000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -187,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657413811676</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="theory is working!!">
+      <created>1657415253940</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1657415253940</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -246,14 +252,15 @@
     <MESSAGE value="refactor code" />
     <MESSAGE value="WOOOOOOOOOOOO!" />
     <MESSAGE value="theory is working" />
-    <option name="LAST_COMMIT_MESSAGE" value="theory is working" />
+    <MESSAGE value="theory is working!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="theory is working!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game.js</url>
-          <line>513</line>
+          <line>521</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
@@ -292,6 +299,18 @@
           <line>462</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game.js</url>
+          <line>757</line>
+          <properties lambdaOrdinal="0" />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game.js</url>
+          <line>770</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
