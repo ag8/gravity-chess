@@ -13,7 +13,7 @@
 
         #letters {
             margin-bottom: 10px;
-            margin-left: 38px;
+            margin-left: -460px;
         }
 
         #wrapper {
@@ -50,7 +50,8 @@
         }
 
         #container {
-            position: fixed;
+            /*position: fixed;*/
+            display: inline-block;
         }
 
         #lefteron {
@@ -65,7 +66,7 @@
         }
 
         #game-record-flex {
-            width: 300px;
+            width: 400px;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -75,8 +76,8 @@
         }
 
         .move-record {
-            width: 110px;
-            text-align: center;
+            width: 160px;
+            text-align: left;
             padding: 5px 20px;
             font-size: 30px;
         }
@@ -84,43 +85,59 @@
         .move-record:active {
             background-color: aquamarine;
         }
+
+        #game-body {
+            /*width: 100%;*/
+            height: 1000px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #top-part {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-<div id="letters">
-    <div class="letter">h</div>
-    <div class="letter">g</div>
-    <div class="letter">f</div>
-    <div class="letter">e</div>
-    <div class="letter">d</div>
-    <div class="letter">c</div>
-    <div class="letter">b</div>
-    <div class="letter">a</div>
-
+<div id="top-part">
+    <h1>Gravity Chess</h1>
 </div>
-<div id="container">
-    <div id="lefteron">
-        <div id="wrapper">
-            <div id="numbers">
-                <div class="number">1</div>
-                <div class="number">2</div>
-                <div class="number">3</div>
-                <div class="number">4</div>
-                <div class="number">5</div>
-                <div class="number">6</div>
-                <div class="number">7</div>
-                <div class="number">8</div>
-            </div>
-            <div id="canvas-wrapper">
-                <canvas width="800" height="800">
-                    An alternative text describing what your canvas displays.
-                </canvas>
+<div id="game-body">
+    <div id="letters">
+        <div class="letter">h</div>
+        <div class="letter">g</div>
+        <div class="letter">f</div>
+        <div class="letter">e</div>
+        <div class="letter">d</div>
+        <div class="letter">c</div>
+        <div class="letter">b</div>
+        <div class="letter">a</div>
+
+    </div>
+    <div id="container">
+        <div id="lefteron">
+            <div id="wrapper">
+                <div id="numbers">
+                    <div class="number">1</div>
+                    <div class="number">2</div>
+                    <div class="number">3</div>
+                    <div class="number">4</div>
+                    <div class="number">5</div>
+                    <div class="number">6</div>
+                    <div class="number">7</div>
+                    <div class="number">8</div>
+                </div>
+                <div id="canvas-wrapper">
+                    <canvas width="800" height="800">
+                        An alternative text describing what your canvas displays.
+                    </canvas>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="righteron">
-        <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button>
-        <div id="game-record-flex">
+        <div id="righteron">
+            <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button>
+            <div id="game-record-flex">
+            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gravity Chess!</title>
+    <style>
+        .letter {
+            display: inline-block;
+            width: 96px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #letters {
+            margin-bottom: 10px;
+            margin-left: -460px;
+        }
+
+        #wrapper {
+            width: 838px;
+            overflow: hidden; /* will contain if #first is longer than #second */
+        }
+
+        #numbers {
+            width: 30px;
+            float: left;
+            margin-right: 8px;
+        }
+
+        #canvas-wrapper {
+            overflow: hidden; /* if you don't want #second to wrap below #first */
+        }
+
+        .number {
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            font-size: 24px;
+            display: block;
+        }
+
+        #game-recording {
+            margin: auto;
+        }
+
+        #game-record {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #container {
+            /*position: fixed;*/
+            display: inline-block;
+        }
+
+        #lefteron {
+            display: inline-block;
+            float: left;
+        }
+
+        #righteron {
+            display: inline-block;
+            float: left;
+            text-align: center;
+        }
+
+        #game-record-flex {
+            width: 400px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-top: 50px;
+            margin-left: 100px;
+            /*background-color: grey;*/
+        }
+
+        .move-record {
+            width: 160px;
+            text-align: left;
+            padding: 5px 20px;
+            font-size: 30px;
+        }
+
+        .move-record:active {
+            background-color: aquamarine;
+        }
+
+        #game-body {
+            /*width: 100%;*/
+            height: 1000px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #top-part {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<details style="visibility: hidden; font-size: 0;">
+<!--    <summary>Epcot Center</summary>-->
+    <div id="game-body">
+        <div id="letters">
+            <div class="letter">h</div>
+            <div class="letter">g</div>
+            <div class="letter">f</div>
+            <div class="letter">e</div>
+            <div class="letter">d</div>
+            <div class="letter">c</div>
+            <div class="letter">b</div>
+            <div class="letter">a</div>
+
+        </div>
+        <div id="container">
+            <div id="lefteron">
+                <div id="wrapper">
+                    <div id="numbers">
+                        <div class="number">1</div>
+                        <div class="number">2</div>
+                        <div class="number">3</div>
+                        <div class="number">4</div>
+                        <div class="number">5</div>
+                        <div class="number">6</div>
+                        <div class="number">7</div>
+                        <div class="number">8</div>
+                    </div>
+                    <div id="canvas-wrapper">
+                        <canvas width="800" height="800" id="ctachkst">
+                            An alternative text describing what your canvas displays.
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div id="righteron">
+                <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button>
+                <div id="game-record-flex">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <img id="white_rook"
+             src="chess_pieces/PNGs/no_shadow/128h/w_rook_png_128px.png"
+             width="116" height="128" alt="White Rook">
+        <img id="white_bishop"
+             src="chess_pieces/PNGs/no_shadow/128h/w_bishop_png_128px.png"
+             width="127" height="128" alt="White Bishop">
+        <img id="white_knight"
+             src="chess_pieces/PNGs/no_shadow/128h/w_knight_png_128px.png"
+             width="115" height="128" alt="White Knight">
+        <img id="white_queen"
+             src="chess_pieces/PNGs/no_shadow/128h/w_queen_png_128px.png"
+             width="141" height="128" alt="White Queen">
+        <img id="white_king"
+             src="chess_pieces/PNGs/no_shadow/128h/w_king_png_128px.png"
+             width="127" height="128" alt="White King">
+        <img id="white_pawn"
+             src="chess_pieces/PNGs/no_shadow/128h/w_pawn_png_128px.png"
+             width="105" height="128" alt="White Pawn">
+        <img id="black_rook"
+             src="chess_pieces/PNGs/no_shadow/128h/b_rook_png_128px.png"
+             width="116" height="128" alt="Black Rook">
+        <img id="black_bishop"
+             src="chess_pieces/PNGs/no_shadow/128h/b_bishop_png_128px.png"
+             width="127" height="128" alt="Black Bishop">
+        <img id="black_knight"
+             src="chess_pieces/PNGs/no_shadow/128h/b_knight_png_128px.png"
+             width="115" height="128" alt="Black Knight">
+        <img id="black_queen"
+             src="chess_pieces/PNGs/no_shadow/128h/b_queen_png_128px.png"
+             width="141" height="128" alt="Black Queen">
+        <img id="black_king"
+             src="chess_pieces/PNGs/no_shadow/128h/b_king_png_128px.png"
+             width="127" height="128" alt="Black King">
+        <img id="black_pawn"
+             src="chess_pieces/PNGs/no_shadow/128h/b_pawn_png_128px.png"
+             width="105" height="128" alt="Black Pawn">
+    </div>
+</details>
+
+<div id="out"></div>
+
+<script src="utils.js"></script>
+<script src="game-minimal.js"></script>
+</body>
+</html>

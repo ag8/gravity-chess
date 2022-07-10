@@ -5,10 +5,280 @@ const ROOK = 3;
 const QUEEN = 4;
 const KING = 5;
 
+function executeMoves(s) {
+    let moves = s.split(". ");
+
+    function parsePlyToTargetNoCheck(ply) {
+        if (ply.includes("=")) {
+            ply = ply.substring(0, ply.length - 2);
+        }
+
+        let l = ply.length;
+        let row = parseInt(ply.substring(l - 1, l), 10) - 1;
+        let col = ["a", "b", "c", "d", "e", "f", "g", "h"].reverse().indexOf(ply.substring(l - 2, l - 1));
+
+        return [row, col];
+    }
+
+    function parsePlyToTarget(ply) {
+        let l = ply.length;
+        let row = parseInt(ply.substring(l - 1, l), 10) - 1;
+        let col = ["a", "b", "c", "d", "e", "f", "g", "h"].reverse().indexOf(ply.substring(l - 2, l - 1));
+
+        for (const piece of gamePieces) {
+            if (piece.row === row && piece.col === col) {
+                return [row, col];
+            }
+        }
+
+        return -69;
+    }
+
+    function parsePlyToTargetP(ply) {
+        if (parsePlyToTarget(ply) === -69) {
+            return -69;
+        }
+
+        let [row, col] = parsePlyToTarget(ply);
+
+        for (const piece of gamePieces) {
+            if (piece.row === row && piece.col === col) {
+                return piece;
+            }
+        }
+
+        return -69;
+    }
+
+    function parsePlyToPiece(ply, color) {
+        let l = ply.length;
+
+        let pieceType = -1;
+
+        // First, determine the piece type.
+        let firstChar = ply.substring(0, 1);
+        if (firstChar === "K") {
+            pieceType = KING;
+        } else if (firstChar === "Q") {
+            pieceType = QUEEN;
+        } else if (firstChar === "B") {
+            pieceType = BISHOP;
+        } else if (firstChar === "N") {
+            pieceType = KNIGHT;
+        } else if (firstChar === "R") {
+            pieceType = ROOK;
+        } else {
+            pieceType = PAWN;
+        }
+
+        if (pieceType === KING) { // King is the easiest case.
+            for (const piece of gamePieces) {
+                if (piece.type === KING && piece.color === color) {
+                    return piece;
+                }
+            }
+
+            throw 'No king found for ply ' + ply + ' and color ' + color + '.';
+        }
+
+        if (pieceType === QUEEN) { // Also easy
+            for (const piece of gamePieces) {
+                if (piece.type === QUEEN && piece.color === color) {
+                    return piece;
+                }
+            }
+
+            throw 'No queen found for ply ' + ply + ' and color ' + color + '.';
+        }
+
+        if (pieceType === BISHOP || pieceType === KNIGHT || pieceType === ROOK) { // These all say where they were
+            let past = ply.split("(")[1].split(")")[0];
+            return parsePlyToTargetP(past);
+        }
+
+        if (pieceType === PAWN) { // Fuck
+            if (ply.length === 2) {  // Normal pawn move
+                let ePart = ply.substring(0, 1);
+                let sevenPart = ply.substring(1, 2);
+
+                if (color === 0) {
+                    let potentialPawnSource = ePart + (sevenPart - 1);
+
+                    let attempt = parsePlyToTargetP(potentialPawnSource);
+
+                    if (attempt !== -69) {
+                        return attempt
+                    } else {
+                        potentialPawnSource = ePart + (sevenPart - 2);
+                        return parsePlyToTargetP(potentialPawnSource);
+                    }
+                } else {
+                    let potentialPawnSource = ePart + (sevenPart - -1);
+
+                    let attempt = parsePlyToTargetP(potentialPawnSource);
+
+                    if (attempt !== -69) {
+                        return attempt
+                    } else {
+                        potentialPawnSource = ePart + (sevenPart - -2);
+                        return parsePlyToTargetP(potentialPawnSource);
+                    }
+                }
+            } else if (ply.length === 4) {
+                if (!ply.includes("=")) { // normal capture
+                    let ePart = ply.substring(0, 1);  // exd7
+                                                      // ^
+                    let sevenPart = ply.substring(3, 4);  // exd7
+                                                          //    ^
+
+                    if (color === 0) {
+                        let potentialPawnSource = ePart + (sevenPart - 1);
+
+                        let attempt = parsePlyToTargetP(potentialPawnSource);
+
+                        if (attempt !== -69) {
+                            return attempt
+                        } else {
+                            potentialPawnSource = ePart + (sevenPart - 2);
+                            return parsePlyToTargetP(potentialPawnSource);
+                        }
+                    } else {
+                        let potentialPawnSource = ePart + (sevenPart - -1);
+
+                        let attempt = parsePlyToTargetP(potentialPawnSource);
+
+                        if (attempt !== -69) {
+                            return attempt
+                        } else {
+                            potentialPawnSource = ePart + (sevenPart - -2);
+                            return parsePlyToTargetP(potentialPawnSource);
+                        }
+                    }
+                } else {  // Promotion
+                    let ePart = ply.substring(0, 1);  // e8=Q
+                                                      // ^
+                    let sevenPart = ply.substring(1, 2);  // e8=Q
+                                                          //  ^
+
+                    if (color === 0) {
+                        let potentialPawnSource = ePart + (sevenPart - 1);
+
+                        return parsePlyToTargetP(potentialPawnSource);
+                    } else {
+                        let potentialPawnSource = ePart + (sevenPart - -1);
+
+                        return parsePlyToTargetP(potentialPawnSource);
+                    }
+                }
+            } else if (ply.length === 6) {  // Capture and promotion
+                let ePart = ply.substring(0, 1);  // dxc1=Q
+                                                  // ^
+                let sevenPart = ply.substring(3, 4);  // dxc1=Q
+                                                      //     ^
+
+                if (color === 0) {
+                    let potentialPawnSource = ePart + (sevenPart - 1);
+
+                    return parsePlyToTargetP(potentialPawnSource);
+                } else {
+                    let potentialPawnSource = ePart + (sevenPart - -1);
+
+                    return parsePlyToTargetP(potentialPawnSource);
+                }
+            } else {
+                throw "The heck does " + ply + " mean??";
+            }
+        }
+    }
+
+    for (const move of moves) {
+        if (move === "1") {
+            continue;
+        }
+
+        let plies = move.split(" ");
+
+        let ply1 = plies[0];
+
+        selectedPiece = parsePlyToPiece(ply1, turn);
+
+        state = 1;
+
+        let [row, col] = parsePlyToTargetNoCheck(ply1);
+
+        console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
+
+        if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
+            let what = "";
+
+            if (ply1.includes("=")) {
+                what = ply1.substring(ply1.length - 1, ply1.length);
+            }
+
+            let [capture, oldCol, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces, what);
+            gamePieces = newPieces;
+
+            updateGravity(gamePieces);
+
+            recordMove(selectedPiece, row, col, capture, oldCol, special);
+
+            turn = 1 - turn;
+        }
+
+        updateBoard();
+
+        console.log("Executed " + ply1);
+
+        selectedPiece = null;
+        state = 0;
+
+        let ply2 = plies[1];
+
+        selectedPiece = parsePlyToPiece(ply2, turn);
+
+        state = 1;
+
+        [row, col] = parsePlyToTargetNoCheck(ply2);
+
+        console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
+
+        if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
+            let what = "";
+
+            if (ply2.includes("=")) {
+                what = ply2.substring(ply2.length - 1, ply2.length);
+            }
+
+            let [capture, oldCol, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces, what);
+            gamePieces = newPieces;
+
+            updateGravity(gamePieces);
+
+            recordMove(selectedPiece, row, col, capture, oldCol, special);
+
+            turn = 1 - turn;
+        }
+
+        updateBoard();
+
+        console.log("Executed " + ply2);
+
+        selectedPiece = null;
+        state = 0;
+
+    }
+}
+
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
 }))).then(() => {
     loadBoard();
+}).then(() => {
+    executeMoves("1. d4 d5 2. e4 dxe4 3. Kd2 exd3 4. Ke3 d2 5. f3 d1=B 6. d5 c6 7. f4 cxd5 8. c4 dxc4 9. b3 cxb3 10. B(c7)xd8 a5 11. B(d8)c7 a4 12. B(c7)xd8 a3 13. N(b2)c4 b2 14. N(c7)xa8 bxa1=Q 15. N(g1)e2 Qxh1 16. Kd5 Kxd7  0–1");
+}).then(() => {
+    var ccc = document.getElementById("ctachkst");
+    var dataURL = ccc.toDataURL("image/png");
+    document.getElementById("out").innerHTML = "<img src='" + dataURL + "' alt='from canvas'/>";
 });
 
 
@@ -105,7 +375,7 @@ function structuredClone(a) {  // polyfill
     return JSON.parse(JSON.stringify(a));
 }
 
-function getLegalMoves(piece, pieces, simulated=false) {
+function getLegalMoves(piece, pieces, simulated = false) {
     let legalMoves = [];
 
     let row = piece.row;
@@ -731,7 +1001,7 @@ let selectedPiece = null;
 //     return [numPieces > gamePieces.length, oldCol, special];
 // }
 
-function movePiece(piece, toRow, toCol, pieces) {
+function movePiece(piece, toRow, toCol, pieces, promotion="") {
     let numPieces = pieces.length;
     let special = "";
 
@@ -741,14 +1011,13 @@ function movePiece(piece, toRow, toCol, pieces) {
     }
 
     let oldCol = piece.col;
-    let oldRow = piece.row;
 
     piece.row = toRow;
     piece.col = toCol;
 
     // Check if the piece is a promoted pawn
     if (piece.color === 0 && piece.row === 7 && piece.type === PAWN || piece.color === 1 && piece.row === 0 && piece.type === PAWN) {
-        piece.type = askForPromotion();
+        piece.type = askForPromotion(promotion);
         if (numPieces <= pieces.length) {
             special = getCoordsName(piece.row, piece.col) + "=" + getPieceName(piece, 0, 0).substring(0, 1);
         } else {
@@ -756,21 +1025,21 @@ function movePiece(piece, toRow, toCol, pieces) {
         }
     }
 
-    return [numPieces > pieces.length, oldCol, oldRow, special, pieces];
+    return [numPieces > pieces.length, oldCol, special, pieces];
 }
 
 let move = 1;
 let gameRecord = "";
 
 
-function recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special) {
-    let pieceName = getPieceName(selectedPiece, capture, oldCol, oldRow), coordsName = getCoordsName(row, col),
+function recordMove(selectedPiece, row, col, capture, oldCol, special) {
+    let pieceName = getPieceName(selectedPiece, capture, oldCol), coordsName = getCoordsName(row, col),
         captureName = capture ? "x" : "", currentMoveRecord;
 
     if (turn === 0) {
-        currentMoveRecord = special.length === 0 ? move + ". " + pieceName + "" + captureName + "" + coordsName + " " : move + ". " + special + " ";
+        currentMoveRecord = special.length === 0 ? move + ". " + pieceName + "" + captureName + "" + coordsName + " " : special;
     } else {
-        currentMoveRecord = special.length === 0 ? pieceName + "" + captureName + "" + coordsName + " " : special + " ";
+        currentMoveRecord = special.length === 0 ? pieceName + "" + captureName + "" + coordsName + " " : special;
         move++;
     }
 
@@ -811,7 +1080,7 @@ function gameOver() {
     return numKings === 2 ? -1 : winner;
 }
 
-function getPieceName(piece, capture, oldCol, oldRow) {
+function getPieceName(piece, capture, oldCol) {
     if (piece.type === PAWN) {
         if (!capture) {
             return "";
@@ -819,11 +1088,11 @@ function getPieceName(piece, capture, oldCol, oldRow) {
             return getCoordsName(piece.row, oldCol)[0];
         }
     } else if (piece.type === ROOK) {
-        return "R(" + getCoordsName(oldRow, oldCol) + ")";
+        return "R(" + getCoordsName(piece.row, piece.col) + ")";
     } else if (piece.type === KNIGHT) {
-        return "N(" + getCoordsName(oldRow, oldCol) + ")";
+        return "N(" + getCoordsName(piece.row, piece.col) + ")";
     } else if (piece.type === BISHOP) {
-        return "B(" + getCoordsName(oldRow, oldCol) + ")";
+        return "B(" + getCoordsName(piece.row, piece.col) + ")";
     } else if (piece.type === QUEEN) {
         return "Q";
     } else if (piece.type === KING) {
@@ -835,7 +1104,7 @@ function getCoordsName(row, col) {
     return ["a", "b", "c", "d", "e", "f", "g", "h"].reverse()[col] + "" + (row - (0 - 1));
 }
 
-function askForPromotion() {
+function askForPromotion(what="") {
     console.log("PROMOTING");
 
     let valid = ["queen", "rook", "bishop", "knight"];
@@ -843,8 +1112,14 @@ function askForPromotion() {
 
     let answer = "";
 
+    if (what.length > 0) {
+        answer = what.toLowerCase();
+    }
+
     do {
-        answer = window.prompt("Which piece to promote to?", "Queen");
+        if (answer.length === 0) {
+            answer = window.prompt("Which piece to promote to?", "Queen");
+        }
     } while (!(valid.includes(answer.toLocaleLowerCase()) || valid2.includes(answer.toLocaleLowerCase())));
 
     switch (answer.toLocaleLowerCase()) {
@@ -895,12 +1170,12 @@ canvas.addEventListener('mousedown', function (e) {
         console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
 
         if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
-            let [capture, oldCol, oldRow, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces);
+            let [capture, oldCol, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces);
             gamePieces = newPieces;
 
             updateGravity(gamePieces);
 
-            recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
+            recordMove(selectedPiece, row, col, capture, oldCol, special);
 
             turn = 1 - turn;
         }
