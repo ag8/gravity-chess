@@ -274,10 +274,15 @@ Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => 
 }))).then(() => {
     loadBoard();
 }).then(() => {
-    executeMoves("1. d4 d5 2. e4 dxe4 3. Kd2 exd3 4. Ke3 d2 5. f3 d1=B 6. d5 c6 7. f4 cxd5 8. c4 dxc4 9. b3 cxb3 10. B(c7)xd8 a5 11. B(d8)c7 a4 12. B(c7)xd8 a3 13. N(b2)c4 b2 14. N(c7)xa8 bxa1=Q 15. N(g1)e2 Qxh1 16. Kd5 Kxd7  0–1");
+    let url = new URL(window.location.href);
+    let gameRecord = url.searchParams.get('game');
+    executeMoves(gameRecord);
 }).then(() => {
-    var ccc = document.getElementById("ctachkst");
-    var dataURL = ccc.toDataURL("image/png");
+    updateBoard();
+}).then(() => {
+    updateBoard();
+    const ccc = document.getElementById("ctachkst");
+    const dataURL = ccc.toDataURL("image/png");
     document.getElementById("out").innerHTML = "<img src='" + dataURL + "' alt='from canvas'/>";
 });
 
