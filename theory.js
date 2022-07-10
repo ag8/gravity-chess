@@ -17,6 +17,11 @@ const white_queen_image = document.getElementById('white_queen');
 const white_king_image = document.getElementById('white_king');
 const white_pawn_image = document.getElementById('white_pawn');
 
+function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+}
 
 class Piece {
     constructor(col, row, type, color) {
@@ -27,8 +32,47 @@ class Piece {
     }
 }
 
+/**
+ * @param {String} HTML representing a single element
+ * @return {Element}
+ */
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
 
-function simulateGame(g, canvasID, outID) {
+var td = htmlToElement('<td>foo</td>'),
+    div = htmlToElement('<div><span>nested</span> <span>stuff</span></div>');
+
+/**
+ * @param {String} HTML representing any number of sibling elements
+ * @return {NodeList}
+ */
+function htmlToElements(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.childNodes;
+}
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
+
+console.log(makeid(5));
+
+
+function simulateGame(g, outID) {
+    let canvasID = makeid(9);
+
     console.log("Simulating game " + g + "; canvas " + canvasID + "; out " + outID + ".");
 
     function executeMoves(s) {
@@ -260,6 +304,10 @@ function simulateGame(g, canvasID, outID) {
 
             let ply2 = plies[1];
 
+            if (ply2.length === 0) {
+                continue;
+            }
+
             selectedPiece = parsePlyToPiece(ply2, turn);
 
             state = 1;
@@ -295,9 +343,112 @@ function simulateGame(g, canvasID, outID) {
         }
     }
 
+    let canvas;
+    let ctx;
+    let canvas_width;
+    let canvas_height;
+    assert(canvas_width === canvas_height, "Weird canvas you got there");
+    let SIZE;
+
     Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
         img.onload = img.onerror = resolve;
     }))).then(() => {
+        var rows = htmlToElements("<details style=\"visibility: hidden; font-size: 0;\">\n" +
+            "    <!--    <summary>Epcot Center</summary>-->\n" +
+            "    <div class=\"game-body\">\n" +
+            "        <div class=\"letters\">\n" +
+            "            <div class=\"letter\">h</div>\n" +
+            "            <div class=\"letter\">g</div>\n" +
+            "            <div class=\"letter\">f</div>\n" +
+            "            <div class=\"letter\">e</div>\n" +
+            "            <div class=\"letter\">d</div>\n" +
+            "            <div class=\"letter\">c</div>\n" +
+            "            <div class=\"letter\">b</div>\n" +
+            "            <div class=\"letter\">a</div>\n" +
+            "\n" +
+            "        </div>\n" +
+            "        <div class=\"container\">\n" +
+            "            <div class=\"lefteron\">\n" +
+            "                <div class=\"wrapper\">\n" +
+            "                    <div class=\"numbers\">\n" +
+            "                        <div class=\"number\">1</div>\n" +
+            "                        <div class=\"number\">2</div>\n" +
+            "                        <div class=\"number\">3</div>\n" +
+            "                        <div class=\"number\">4</div>\n" +
+            "                        <div class=\"number\">5</div>\n" +
+            "                        <div class=\"number\">6</div>\n" +
+            "                        <div class=\"number\">7</div>\n" +
+            "                        <div class=\"number\">8</div>\n" +
+            "                    </div>\n" +
+            "                    <div class=\"canvas-wrapper\">\n" +
+            "                        <canvas width=\"800\" height=\"800\" id=\"" + canvasID + "\">\n" +
+            "                            An alternative text describing what your canvas displays.\n" +
+            "                        </canvas>\n" +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "            <div class=\"righteron\">\n" +
+            "                <button onclick=\"fallbackCopyTextToClipboard(gameRecord);\">Copy game</button>\n" +
+            "                <div class=\"game-record-flex\">\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "</details>");
+        document.body.append(...rows);
+    }).then(() => {
+        canvas = document.querySelector('#' + canvasID);
+        ctx = canvas.getContext('2d');
+        canvas_width = ctx.canvas.clientWidth;
+        canvas_height = ctx.canvas.clientHeight;
+        assert(canvas_width === canvas_height, "Weird canvas you got there");
+        SIZE = canvas_width / 8;
+
+        canvas.addEventListener('mousedown', function (e) {
+            let [x, y] = getCursorPosition(canvas, e);
+
+            console.log("You clicked on " + x + ", " + y);
+
+            if (state === 0) {  // Selecting a piece
+                // Detect whether this selected a piece
+                selectedPiece = getSelectedPiece(x, y);
+
+                if (selectedPiece == null) {
+                    console.log("you clicked nowhere");
+                    return;
+                }
+                if (selectedPiece.color !== turn) {
+                    console.log("you clicked the other player's piece");
+                    return;
+                }
+
+                console.log("You chose the piece " + selectedPiece.type);
+
+                state = 1;
+            } else if (state === 1) { // Selecting a square to move to
+                let [row, col] = getSelectedSquare(x, y);
+
+                console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
+
+                if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
+                    let [capture, oldCol, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces);
+                    gamePieces = newPieces;
+
+                    updateGravity(gamePieces);
+
+                    recordMove(selectedPiece, row, col, capture, oldCol, special);
+
+                    turn = 1 - turn;
+                }
+
+                selectedPiece = null;
+                state = 0;
+            }
+
+
+            updateBoard(selectedPiece);
+        });
+
         loadBoard();
     }).then(() => {
         let url = new URL(window.location.href);
@@ -312,13 +463,6 @@ function simulateGame(g, canvasID, outID) {
         document.getElementById(outID).innerHTML = "<img src='" + dataURL + "' alt='" + g + "' title='" + g + "'/>";
     });
 
-
-    const canvas = document.querySelector('#' + canvasID);
-    const ctx = canvas.getContext('2d');
-    const canvas_width = ctx.canvas.clientWidth;
-    const canvas_height = ctx.canvas.clientHeight;
-    assert(canvas_width === canvas_height, "Weird canvas you got there");
-    const SIZE = canvas_width / 8;
 
 
     /**
@@ -1151,52 +1295,6 @@ function simulateGame(g, canvasID, outID) {
                 return KNIGHT;
         }
     }
-
-
-    canvas.addEventListener('mousedown', function (e) {
-        let [x, y] = getCursorPosition(canvas, e);
-
-        console.log("You clicked on " + x + ", " + y);
-
-        if (state === 0) {  // Selecting a piece
-            // Detect whether this selected a piece
-            selectedPiece = getSelectedPiece(x, y);
-
-            if (selectedPiece == null) {
-                console.log("you clicked nowhere");
-                return;
-            }
-            if (selectedPiece.color !== turn) {
-                console.log("you clicked the other player's piece");
-                return;
-            }
-
-            console.log("You chose the piece " + selectedPiece.type);
-
-            state = 1;
-        } else if (state === 1) { // Selecting a square to move to
-            let [row, col] = getSelectedSquare(x, y);
-
-            console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
-
-            if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
-                let [capture, oldCol, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces);
-                gamePieces = newPieces;
-
-                updateGravity(gamePieces);
-
-                recordMove(selectedPiece, row, col, capture, oldCol, special);
-
-                turn = 1 - turn;
-            }
-
-            selectedPiece = null;
-            state = 0;
-        }
-
-
-        updateBoard(selectedPiece);
-    });
 
 
 }

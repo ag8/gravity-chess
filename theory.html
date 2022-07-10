@@ -97,13 +97,7 @@
             text-align: center;
         }
 
-        #out1 {
-            height: 800px;
-            width: 800px;
-            margin: 0 auto;
-        }
-
-        #out2 {
+        .game {
             height: 800px;
             width: 800px;
             margin: 0 auto;
@@ -111,90 +105,6 @@
     </style>
 </head>
 <body>
-<details style="visibility: hidden; font-size: 0;">
-    <!--    <summary>Epcot Center</summary>-->
-    <div class="game-body">
-        <div class="letters">
-            <div class="letter">h</div>
-            <div class="letter">g</div>
-            <div class="letter">f</div>
-            <div class="letter">e</div>
-            <div class="letter">d</div>
-            <div class="letter">c</div>
-            <div class="letter">b</div>
-            <div class="letter">a</div>
-
-        </div>
-        <div class="container">
-            <div class="lefteron">
-                <div class="wrapper">
-                    <div class="numbers">
-                        <div class="number">1</div>
-                        <div class="number">2</div>
-                        <div class="number">3</div>
-                        <div class="number">4</div>
-                        <div class="number">5</div>
-                        <div class="number">6</div>
-                        <div class="number">7</div>
-                        <div class="number">8</div>
-                    </div>
-                    <div class="canvas-wrapper">
-                        <canvas width="800" height="800" id="can1">
-                            An alternative text describing what your canvas displays.
-                        </canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="righteron">
-                <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button>
-                <div class="game-record-flex">
-                </div>
-            </div>
-        </div>
-    </div>
-</details>
-<details style="visibility: hidden; font-size: 0;">
-    <!--    <summary>Epcot Center</summary>-->
-    <div class="game-body">
-        <div class="letters">
-            <div class="letter">h</div>
-            <div class="letter">g</div>
-            <div class="letter">f</div>
-            <div class="letter">e</div>
-            <div class="letter">d</div>
-            <div class="letter">c</div>
-            <div class="letter">b</div>
-            <div class="letter">a</div>
-
-        </div>
-        <div class="container">
-            <div class="lefteron">
-                <div class="wrapper">
-                    <div class="numbers">
-                        <div class="number">1</div>
-                        <div class="number">2</div>
-                        <div class="number">3</div>
-                        <div class="number">4</div>
-                        <div class="number">5</div>
-                        <div class="number">6</div>
-                        <div class="number">7</div>
-                        <div class="number">8</div>
-                    </div>
-                    <div class="canvas-wrapper">
-                        <canvas width="800" height="800" id="can2">
-                            An alternative text describing what your canvas displays.
-                        </canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="righteron">
-                <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button>
-                <div class="game-record-flex">
-                </div>
-            </div>
-        </div>
-    </div>
-</details>
 
 <div style="display:none;">
     <img id="white_rook"
@@ -236,9 +146,13 @@
 </div>
 
 <p>Here's a fun game:</p>
-<div id="out1"></div>
+<div id="out1" class="game"></div>
 <p>Here's another fun game:</p>
-<div id="out2"></div>
+<div id="out2" class="game"></div>
+<p>Here's yet another fun game:</p>
+<div id="out3" class="game"></div>
+<p>And finally:</p>
+<div id="out4" class="game"></div>
 
 <script src="utils.js"></script>
 <script src="theory.js"></script>
@@ -246,9 +160,13 @@
     Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
         img.onload = img.onerror = resolve;
     }))).then(() => {
-        simulateGame("1. c4 c5 2. b4 b5 3. a4 a5 ", "can1", "out1");
+        simulateGame("1. c4 c5 2. b4 b5 3. a4 a5 ", "out1");
     }).then(() => {
-        simulateGame("1. d3 d6 2. N(g1)f3 exf6 ", "can2", "out2");
+        simulateGame("1. d3 d6 2. N(g1)f3 exf6 ", "out2");
+    }).then(() => {
+        simulateGame("1. a4 b5 2. axb5 c6 3. bxc6 N(b8)xa6 4. cxd7 Qa5 5. dxc8=Q Qxd2 6. Qb7 e6 7. f4 g5 8. fxg5 h6 9. gxh6 N(g8)xf6 10. h7 R(h8)g8 11. hxg8=Q e5 12. e4 N(f6)d5 13. Kd3 f5 14. exf5 e4 15. f6 e3 16. f7 N(d7)c5 17. Kc6 B(f8)c5 18. f8=Q ", "out3");
+    }).then(() => {
+        simulateGame("1. a4 a5 2. b4 b5 3. c4 c5 4. d4 d5 5. e4 e5 6. f4 f5 7. g4 g5 8. h4 h5 9. hxg5 fxg4 10. fxe5 dxe4 11. cxb5 axb4 12. B(f7)xg8 exd3 13. g6 d2 14. g7 d1=B 15. Kxd3 B(f8)xg7 ", "out4");
     });
 </script>
 </body>
