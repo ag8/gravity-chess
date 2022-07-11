@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gravity Chess!</title>
+    <style>
+        #main {
+            text-align: center;
+        }
+
+        button {
+            font-size: 36px;
+            border-radius: 5px;
+            background-color: limegreen;
+        }
+
+        #gameName {
+            font-size: 36px;
+            width: 200px;
+        }
+
+        #created {
+            font-size: 24px;
+            display: none;
+        }
+
+        #code {
+            background: palegoldenrod;
+            padding: 0px 5px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="main">
+    <h1>Gravity Chess!</h1>
+    <img src="https://gravity-chess.andrew.gr/game/logos/logo.php" width="200px" height="200px"
+         alt="Gravity Chess!"/><br/><br/><br/>
+    <button onclick="createGame();">Create New Game</button>
+    <div id="created">
+        <p>Game created. <a href="" id="link">Go to game</a></p>
+        <p>Share join code: <span id="code" onclick="copyCode();">ajfjd</span></p>
+    </div>
+    <br/><br/><br/><input type="text" id="gameName" name="gameName"/>
+    <button onclick="joinGame();">Join Game</button>
+</div>
+<!--<button onclick="createGame();">Create Game</button>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<input type="text" id="gameName" name="gameName"/>-->
+<!--<button onclick="joinGame();">Join Game</button>-->
+
+<script>
+    function httpGetAsync(theUrl, callback) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+
+    function createGame() {
+        httpGetAsync("create_game.php", startPlayingCreatedGame);
+    }
+
+    function startPlayingCreatedGame(name) {
+        document.getElementById("code").innerText = name;
+        copyTextToClipboard(name);
+        document.getElementById("created").style.display = "block";
+        document.getElementById("link").href = "play.php?name=" + name + "&color=0";
+    }
+
+    function joinGame() {
+        let n = document.getElementById("gameName").value;
+        httpGetAsync("join_game.php?name=" + n, startPlayingJoinedGame);
+    }
+
+    function startPlayingJoinedGame(name) {
+        if (name.length !== 5) {
+            console.log("Game not found.");
+            console.log("name=" + name);
+            console.log("len=" + name.length);
+            return;
+        }
+
+        window.location = "play.php?name=" + name + "&color=1";
+    }
+
+    function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+
+        // Avoid scrolling to bottom
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+            fallbackCopyTextToClipboard(text);
+            return;
+        }
+        navigator.clipboard.writeText(text).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }
+
+    var copyBobBtn = document.querySelector('.js-copy-bob-btn'),
+        copyJaneBtn = document.querySelector('.js-copy-jane-btn');
+
+    copyBobBtn.addEventListener('click', function (event) {
+        copyTextToClipboard('Bob');
+    });
+
+
+    copyJaneBtn.addEventListener('click', function (event) {
+        copyTextToClipboard('Jane');
+    });
+</script>
+</body>
+</html>

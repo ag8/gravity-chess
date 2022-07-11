@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="multiplauyer">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="works with refreshes now!!!">
+      <change afterPath="$PROJECT_DIR$/game_index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/multiplayer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,11 +123,11 @@
       <recent name="C:\development\gravity-chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.multiplayer.html">
-    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/gravity-chess/index.html" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="JavaScript Debug.game_index.html">
+    <configuration name="game_index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/game_index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="minimal.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/minimal.html" useBuiltInWebServerPort="true">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/gravity-chess/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="multiplayer.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/multiplayer.html" useBuiltInWebServerPort="true">
@@ -141,11 +141,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.game_index.html" />
         <item itemvalue="JavaScript Debug.multiplayer.html" />
         <item itemvalue="JavaScript Debug.test.html" />
         <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="JavaScript Debug.theory.html" />
-        <item itemvalue="JavaScript Debug.minimal.html" />
       </list>
     </recent_temporary>
   </component>
@@ -167,7 +167,7 @@
       <workItem from="1657397197832" duration="19551000" />
       <workItem from="1657505802662" duration="7972000" />
       <workItem from="1657502662392" duration="655000" />
-      <workItem from="1657562456050" duration="4113000" />
+      <workItem from="1657562456050" duration="5720000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -211,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657503499497</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="works with refreshes now!!!">
+      <created>1657566761809</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1657566761809</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -272,7 +279,8 @@
     <MESSAGE value="theory is working" />
     <MESSAGE value="theory is working!!" />
     <MESSAGE value="multiplauyer" />
-    <option name="LAST_COMMIT_MESSAGE" value="multiplauyer" />
+    <MESSAGE value="works with refreshes now!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="works with refreshes now!!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
