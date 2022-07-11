@@ -8,6 +8,8 @@ const KING = 5;
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
 }))).then(() => {
+    getInfoFromServer();
+}).then(() => {
     loadBoard();
 });
 
@@ -82,6 +84,63 @@ let gamePieces = initGamePieces();
 
 // The actual game code
 let player = 1;
+
+function getInfoFromServer() {
+    console.log("Loading info from server...");
+
+    httpGetAsync("get_info.php?name=" + GAMENAME, loadFromServer);
+}
+
+function loadFromServer(gameData) {
+    let parts = gameData.split("^^^");
+
+    if (parts[0].length === 0) {
+        console.log("Nothing to load (new game).");
+        return;
+    }
+
+    gameRecord = parts[0].replace(/"+/g, '');
+    console.log("FULL RECORD:");
+    console.log(gameRecord);
+    loadGameRecord();
+    gamePieces = JSON.parse(parts[1]);
+    turn = 1 - parseInt(parts[2], 10);
+
+    console.log("Data loaded from server.");
+    updateBoard();
+}
+
+function loadGameRecord() {
+    console.log("Loading game record!");
+
+    let sections = gameRecord.split(". ");
+
+    for (let i = 1; i < sections.length; i++) {
+        console.log("Looking at ")
+        let plies = sections[i].split(" ");
+
+        for (let j = 0; j < Math.min(plies.length, 2); j++) {
+            if (plies[j].length === 0) {
+                continue;
+            }
+
+            console.log("Loading ply " + plies[j] + ".");
+
+            let div = document.createElement("div");
+            div.className = "move-record";
+            if (j === 0) {
+                div.innerHTML = (i) + ". ";
+            } else {
+                div.innerHTML = ""
+            }
+            div.innerHTML += plies[j];
+
+            document.getElementById("game-record-flex").appendChild(div);
+        }
+    }
+
+    move = sections.length - 1;
+}
 
 function loadBoard() {
     updateBoard();
@@ -919,11 +978,14 @@ function getNewMoveFromServer() {
                 let pieces = response.split("^^^");
                 let pieceToMove = JSON.parse(pieces[0]);
                 let [row, col] = pieces[1].split(",");
+                console.log("About to move this piece:");
+                console.log(pieceToMove);
+                console.log("To (row, col): (" + row + ", " + col + ")");
                 otherPlayerMove(pieceToMove, parseInt(row, 10), parseInt(col, 10));
             }
         }
     }
-    xmlHttp.open("GET", "poll_move.php?name=" + GAMENAME, true); // true for asynchronous
+    xmlHttp.open("GET", "poll_move.php?name=" + GAMENAME + "&color=" + YOURCOLOR, true); // true for asynchronous
     xmlHttp.send(null);
 }
 
@@ -980,7 +1042,7 @@ function otherPlayerMove(pieceToMove, row, col) {
 function sendToServer(piece, row, col) {
     console.log("SENDING TO SERVER!!!!!!!!!!");
 
-    let url = "send_move.php?name=" + GAMENAME + "&piece=" + encodeURI(JSON.stringify(piece)) + "&row=" + row + "&col=" + col + "";
+    let url = "send_move.php?name=" + GAMENAME + "&piece=" + encodeURI(JSON.stringify(piece)) + "&row=" + row + "&col=" + col + "&pieces=" + encodeURI(JSON.stringify(gamePieces)) + "&record=" + encodeURI(JSON.stringify(gameRecord)) + "";
 
     console.log("URL IS " + url);
 
@@ -1024,13 +1086,17 @@ canvas.addEventListener('mousedown', function (e) {
         console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
 
         if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
-            sendToServer(selectedPiece, row, col);
+            let oldPieceCopy = JSON.parse(JSON.stringify(selectedPiece));
+
             let [capture, oldCol, oldRow, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces);
             gamePieces = newPieces;
 
             updateGravity(gamePieces);
 
             recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
+
+            // Send to server after computation is done (in case of refresh)
+            sendToServer(oldPieceCopy, row, col);
 
             turn = 1 - turn;
         }

@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="multiplauyer">
-      <change afterPath="$PROJECT_DIR$/multiplayer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/multiplayer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/multiplayer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +166,8 @@
       <workItem from="1640637209379" duration="1543000" />
       <workItem from="1657397197832" duration="19551000" />
       <workItem from="1657505802662" duration="7972000" />
-      <workItem from="1657502662392" duration="615000" />
+      <workItem from="1657502662392" duration="655000" />
+      <workItem from="1657562456050" duration="4113000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -205,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657415253940</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="multiplauyer">
+      <created>1657503499497</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1657503499497</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -323,7 +329,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/multiplayer.js</url>
-          <line>967</line>
+          <line>1029</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
