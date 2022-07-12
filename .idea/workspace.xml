@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="works with refreshes now!!!">
-      <change afterPath="$PROJECT_DIR$/game_index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opening_theory.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/multiplayer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +169,7 @@
       <workItem from="1657505802662" duration="7972000" />
       <workItem from="1657502662392" duration="655000" />
       <workItem from="1657562456050" duration="5720000" />
+      <workItem from="1657643592039" duration="5207000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -337,7 +339,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/multiplayer.js</url>
-          <line>1029</line>
+          <line>1065</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>

@@ -89,6 +89,14 @@ function getInfoFromServer() {
     console.log("Loading info from server...");
 
     httpGetAsync("get_info.php?name=" + GAMENAME, loadFromServer);
+
+    updateTime();
+
+    if (turn !== YOURCOLOR) {
+        document.getElementById("timeh").classList.add("active");
+    } else {
+        document.getElementById("opp-timeh").classList.add("active");
+    }
 }
 
 function loadFromServer(gameData) {
@@ -965,6 +973,31 @@ function httpGetAsync(theUrl, callback) {
     xmlHttp.send(null);
 }
 
+function msToTime(duration) {
+    let milliseconds = Math.floor((duration % 1000) / 100),
+        seconds = Math.floor((duration / 1000) % 60),
+        minutes = Math.floor((duration / (1000 * 60)) % 60),
+        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    if (hours > 0) {
+        return hours + ":" + minutes;
+    } else {
+        if (minutes > 10) {
+            return hours + ":" + minutes;
+        } else {
+            if (minutes > 1) {
+                return minutes + ":" + seconds;
+            } else {
+                return minutes + ":" + seconds + "." + milliseconds;
+            }
+        }
+    }
+}
+
 function getNewMoveFromServer() {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
@@ -974,6 +1007,9 @@ function getNewMoveFromServer() {
             console.log("Got response " + response.length);
 
             if (response.length > 3) {
+                document.getElementById("opp-timeh").classList.remove("active");
+                document.getElementById("timeh").classList.add("active");
+                updateTime();
                 console.log("IMPLEMENTING RESPONSE RESULT!!!!!!!!!!!!");
                 let pieces = response.split("^^^");
                 let pieceToMove = JSON.parse(pieces[0]);
@@ -1041,14 +1077,69 @@ function otherPlayerMove(pieceToMove, row, col) {
 
 function sendToServer(piece, row, col) {
     console.log("SENDING TO SERVER!!!!!!!!!!");
+    document.getElementById("timeh").classList.remove("active");
+    document.getElementById("opp-timeh").classList.add("active");
+    updateTime();
 
-    let url = "send_move.php?name=" + GAMENAME + "&piece=" + encodeURI(JSON.stringify(piece)) + "&row=" + row + "&col=" + col + "&pieces=" + encodeURI(JSON.stringify(gamePieces)) + "&record=" + encodeURI(JSON.stringify(gameRecord)) + "";
+    let url = "send_move.php?name=" + GAMENAME + "&piece=" + encodeURI(JSON.stringify(piece)) + "&row=" + row + "&col=" + col + "&pieces=" + encodeURI(JSON.stringify(gamePieces)) + "&record=" + encodeURI(JSON.stringify(gameRecord)) + "&color=" + YOURCOLOR + "";
 
     console.log("URL IS " + url);
 
     httpGetAsync(url, (() => {
         console.log("Sent to server!");
     }))
+}
+
+function updateTime() {
+    httpGetAsync("get_time.php?name=" + GAMENAME, drawTimers);
+}
+
+let player1RemainingTime = 4206942069;
+let player2RemainingTime = 4206942069;
+let lastCalledMillis = Date.now();
+
+function drawTime() {
+    let updateAmount = Date.now() - lastCalledMillis;
+    lastCalledMillis = Date.now();
+
+    if (turn === 0) {
+        player1RemainingTime -= updateAmount;
+    } else {
+        player2RemainingTime -= updateAmount;
+    }
+
+    // console.log("Player 1 remaining time: " + player1RemainingTime);
+
+    drawTimers(player1RemainingTime + "^^^" + player2RemainingTime);
+}
+
+setInterval(drawTime, 100);
+
+function drawTimers(data) {
+    let parts = data.split("^^^");
+
+    player1RemainingTime = parseInt(parts[0], 10);
+    player2RemainingTime = parseInt(parts[1], 10);
+
+    let firstTime = msToTime(parts[0]);
+    let secondTime = msToTime(parts[1]);
+
+    if (YOURCOLOR === 0) {
+        document.getElementById("time").innerHTML = "<h3 id=\"timeh\">" + firstTime + "</h3>";
+        document.getElementById("opp-time").innerHTML = "<h3 id=\"opp-timeh\">" + secondTime + "</h3>";
+    } else {
+        document.getElementById("time").innerHTML = "<h3 id=\"timeh\">" + secondTime + "</h3>";
+        document.getElementById("opp-time").innerHTML = "<h3 id=\"opp-timeh\">" + firstTime + "</h3>";
+    }
+
+    if (turn !== YOURCOLOR) {
+        document.getElementById("timeh").classList.remove("active");
+        document.getElementById("opp-timeh").classList.add("active");
+    } else {
+
+        document.getElementById("timeh").classList.add("active");
+        document.getElementById("opp-timeh").classList.remove("active");
+    }
 }
 
 canvas.addEventListener('mousedown', function (e) {
