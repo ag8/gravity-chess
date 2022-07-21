@@ -1,15 +1,4 @@
-let customLoadFunction = getInfoFromServer;
 
-function getInfoFromServer() {
-    console.log("Loading info from server...");
-    httpGetAsync("get_info.php?name=" + GAMENAME, loadFromServer);
-    updateTime();
-    if (turn !== YOURCOLOR) {
-        document.getElementById("timeh").classList.add("active");
-    } else {
-        document.getElementById("opp-timeh").classList.add("active");
-    }
-}
 function loadFromServer(gameData) {
     let parts = gameData.split("^^^");
     if (parts[0].length === 0) {
@@ -20,7 +9,8 @@ function loadFromServer(gameData) {
     console.log("FULL RECORD:");
     console.log(gameRecord);
     loadGameRecord();
-    gamePieces = JSON.parse(parts[1]);
+    let gamePieces = JSON.parse(parts[1]);  // TODO get castling data etc from server
+    globalGameState = new GameState(gamePieces);
     turn = 1 - parseInt(parts[2], 10);
     console.log("Data loaded from server.");
     updateBoard();
@@ -136,7 +126,7 @@ const DELAY = 300;
 setTimeout(pollForUpdate, DELAY);
 
 function getMatch(p) {
-    for (const piece of gamePieces) {
+    for (const piece of globalGameState.pieces) {
         if (p.row === piece.row && p.col === piece.col && p.color === piece.color) {
             return piece;
         }
@@ -150,10 +140,10 @@ function otherPlayerMove(pieceToMove, row, col) {
 
     pieceToMove = getMatch(pieceToMove);
 
-    let [capture, oldCol, oldRow, special, newPieces] = movePiece(pieceToMove, row, col, gamePieces);
-    gamePieces = newPieces;
+    let [capture, oldCol, oldRow, special, newPieces] = globalGameState.movePiece(pieceToMove, row, col);
+    globalGameState.gamePieces = newPieces;
 
-    updateGravity(gamePieces);
+    globalGameState.updateGravity();
 
     recordMove(pieceToMove, row, col, capture, oldCol, oldRow, special);
 
@@ -168,7 +158,7 @@ function sendToServer(piece, row, col) {
     document.getElementById("opp-timeh").classList.add("active");
     updateTime();
 
-    let url = "send_move.php?name=" + GAMENAME + "&piece=" + encodeURI(JSON.stringify(piece)) + "&row=" + row + "&col=" + col + "&pieces=" + encodeURI(JSON.stringify(gamePieces)) + "&record=" + encodeURI(JSON.stringify(gameRecord)) + "&color=" + YOURCOLOR + "";
+    let url = "send_move.php?name=" + GAMENAME + "&piece=" + encodeURI(JSON.stringify(piece)) + "&row=" + row + "&col=" + col + "&pieces=" + encodeURI(JSON.stringify(globalGameState.pieces)) + "&record=" + encodeURI(JSON.stringify(gameRecord)) + "&color=" + YOURCOLOR + "";
 
     console.log("URL IS " + url);
 
@@ -261,15 +251,12 @@ canvas.addEventListener('mousedown', function (e) {
     } else if (state === 1) { // Selecting a square to move to
         let [row, col] = getSelectedSquare(x, y);
 
-        console.log(getLegalMoves(selectedPiece, structuredClone(gamePieces)));
-
-        if (getLegalMoves(selectedPiece, structuredClone(gamePieces)).some(a => [row, col].every((v, i) => v === a[i]))) {
+        if (getLegalMoves(structuredClone(selectedPiece), structuredClone(globalGameState)).some(a => [row, col].every((v, i) => v === a[i]))) {
             let oldPieceCopy = JSON.parse(JSON.stringify(selectedPiece));
+            let [capture, oldCol, oldRow, special, newPieces] = globalGameState.movePiece(selectedPiece, row, col);
+            globalGameState.pieces = newPieces;
 
-            let [capture, oldCol, oldRow, special, newPieces] = movePiece(selectedPiece, row, col, gamePieces);
-            gamePieces = newPieces;
-
-            updateGravity(gamePieces);
+            globalGameState.updateGravity();
 
             recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
 
