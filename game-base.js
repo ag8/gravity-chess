@@ -55,6 +55,16 @@ class GameState {
 
     }
 
+    movePieceTo(piece, toRow, toCol) {
+        for (let i = 0; i < this.pieces.length; i++) {
+            let tryPiece = this.pieces[i];
+            if (tryPiece.row === piece.row && tryPiece.col === piece.col && tryPiece.type === piece.type) {
+                tryPiece.row = toRow;
+                tryPiece.col = toCol;
+            }
+        }
+    }
+
     movePiece(piece, toRow, toCol) {
         let numPieces = this.pieces.length;
         let special = "";
@@ -83,8 +93,9 @@ class GameState {
         let oldCol = piece.col;
         let oldRow = piece.row;
 
-        piece.row = toRow;
-        piece.col = toCol;
+        // piece.row = toRow;
+        // piece.col = toCol;
+        this.movePieceTo(piece, toRow, toCol);
 
         // Check if the piece is a pawn that went two squares
         if (piece.type === PAWN && Math.abs(piece.row - oldRow) === 2) {
@@ -573,9 +584,9 @@ function getLegalMoves(piece, gamestate, simulated = false) {
         hypotheticalGamestate.pieces = newPieces;
         hypotheticalGamestate.updateGravity();
 
-        let kingLocation = getKingLocation(turn, pieces);
+        let kingLocation = getKingLocation(turn, hypotheticalGamestate.pieces);
 
-        for (const chPiece of pieces) {
+        for (const chPiece of hypotheticalGamestate.pieces) {
             if (chPiece.color !== turn) {  // If it's the opposite color
                 let opponentPieceLegalMoves = getLegalMoves(chPiece, structuredClone(hypotheticalGamestate), true);
 
@@ -601,7 +612,7 @@ function getLegalMoves(piece, gamestate, simulated = false) {
     let actuallyLegalMoves = [];
 
     for (let i = 0; i < legalMoves.length; i++) {
-        let actuallyLegal = testLegality(legalMoves[i], piece, structuredClone(gamestate));
+        let actuallyLegal = testLegality(legalMoves[i], structuredClone(piece), structuredClone(gamestate));
 
         if (actuallyLegal) {
             actuallyLegalMoves.push(legalMoves[i]);

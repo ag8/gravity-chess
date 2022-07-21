@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fix some multiplayer bugs">
-      <change afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/load.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/multi.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/simple.js" afterDir="false" />
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="rewritten using gamestates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai-game.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/ai-game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/old/ai.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/old/game_index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multiplayer.html" beforeDir="false" afterPath="$PROJECT_DIR$/old/multiplayer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/multiplayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +173,7 @@
       <workItem from="1657562456050" duration="5720000" />
       <workItem from="1657643592039" duration="6475000" />
       <workItem from="1657727428344" duration="25000" />
-      <workItem from="1658354280123" duration="6644000" />
+      <workItem from="1658354280123" duration="7566000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -242,7 +231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657652248165</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="rewritten using gamestates">
+      <created>1658365254440</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1658365254440</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -305,7 +301,8 @@
     <MESSAGE value="multiplauyer" />
     <MESSAGE value="works with refreshes now!!!" />
     <MESSAGE value="fix some multiplayer bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix some multiplayer bugs" />
+    <MESSAGE value="rewritten using gamestates" />
+    <option name="LAST_COMMIT_MESSAGE" value="rewritten using gamestates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -373,15 +370,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>652</line>
+          <line>663</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>571</line>
+          <line>582</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>611</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
