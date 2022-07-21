@@ -222,7 +222,7 @@ function getLegalMoves(piece, gamestate, simulated = false) {
             }
 
             if (row === 1) {
-                if (getPieceOn(row + 2, col, pieces) == null) {
+                if (getPieceOn(row + 2, col, pieces) == null && getPieceOn(row + 1, col, pieces) == null) {
                     legalMoves.push([row + 2, col]);
                 }
             }
@@ -248,7 +248,7 @@ function getLegalMoves(piece, gamestate, simulated = false) {
             }
 
             if (row === 6) {
-                if (getPieceOn(row - 2, col, pieces) == null) {
+                if (getPieceOn(row - 2, col, pieces) == null && getPieceOn(row - 1, col, pieces) == null) {
                     legalMoves.push([row - 2, col]);
                 }
             }
