@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fixed illegal double pawn push through piece">
-      <change afterPath="$PROJECT_DIR$/loadmulti.js" afterDir="false" />
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added fixed legal move highlighting to multiplayer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multi.js" beforeDir="false" afterPath="$PROJECT_DIR$/multi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +173,7 @@
       <workItem from="1657562456050" duration="5720000" />
       <workItem from="1657643592039" duration="6475000" />
       <workItem from="1657727428344" duration="25000" />
-      <workItem from="1658354280123" duration="8878000" />
+      <workItem from="1658354280123" duration="10535000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -253,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658366711676</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added fixed legal move highlighting to multiplayer">
+      <created>1658367538866</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1658367538866</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -319,7 +325,8 @@
     <MESSAGE value="rewritten using gamestates" />
     <MESSAGE value="working legal moves with lookahead??" />
     <MESSAGE value="fixed illegal double pawn push through piece" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed illegal double pawn push through piece" />
+    <MESSAGE value="added fixed legal move highlighting to multiplayer" />
+    <option name="LAST_COMMIT_MESSAGE" value="added fixed legal move highlighting to multiplayer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -380,28 +387,10 @@
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/simple.js</url>
-          <line>2</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>663</line>
+          <line>164</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>582</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>611</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="46" />
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

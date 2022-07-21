@@ -5,6 +5,12 @@ const ROOK = 3;
 const QUEEN = 4;
 const KING = 5;
 
+const GRAVITY_STANDARD = 101;
+const GRAVITY_BIDIRECTIONAL = 102;
+const GRAVITY_LEFT = 103;
+const GRAVITY_RIGHT = 104;
+const GRAVITY_HOKEYPOKEY = 106;
+
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
 }))).then(() => {
@@ -53,6 +59,7 @@ class GameState {
         this.shortCastlingAllowed = true;
         this.longCastlingAllowed = true;
 
+        this.gravityStyle = GRAVITY_BIDIRECTIONAL;
     }
 
     movePieceTo(piece, toRow, toCol) {
@@ -75,7 +82,7 @@ class GameState {
         }
         // Then, check for the french move
         if (this.enPassantAllowed && toRow === this.enPassantTargetRow && toCol === this.enPassantTargetCol) {
-            this.pieces = this.pieces.filter(piece => !(piece.row === this.nPassantVictimRow && piece.col === this.enPassantVictimCol))
+            this.pieces = this.pieces.filter(piece => !(piece.row === this.enPassantVictimRow && piece.col === this.enPassantVictimCol))
         }
         // Next, check if this disabled castling
         if (piece.type === KING) {
@@ -96,6 +103,20 @@ class GameState {
         // piece.row = toRow;
         // piece.col = toCol;
         this.movePieceTo(piece, toRow, toCol);
+
+        // Check for castling
+        // Long
+        if (piece.type === KING && piece.col - oldCol === 2) {
+            let searchRook = new Piece(7, 0, ROOK, piece.color);
+            this.movePieceTo(searchRook, 0, 4);
+            special = "0-0-0";
+        }
+        // Short
+        if (piece.type === KING && piece.col - oldCol === -2) {
+            let searchRook = new Piece(0, 0, ROOK, piece.color);
+            this.movePieceTo(searchRook, 0, 2);
+            special = "0-0";
+        }
 
         // Check if the piece is a pawn that went two squares
         if (piece.type === PAWN && Math.abs(piece.row - oldRow) === 2) {
@@ -122,19 +143,64 @@ class GameState {
     }
 
     updateGravity() {
-        for (let i = 0; i < 8; i++) {  // Max eight gravity updates
-            for (const piece of this.pieces) {
-                if (piece.type === PAWN) {
-                    continue;
+        if (this.gravityStyle === GRAVITY_STANDARD) {
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let belowRow = piece.row + 1;
+                    let col = piece.col;
+
+                    if (getPieceOn(belowRow, col, this.pieces) == null) {
+                        if (onBoard(belowRow, col)) {
+                            piece.row = belowRow;
+                            piece.col = col;
+                        }
+                    }
                 }
+            }
+        } else if (this.gravityStyle === GRAVITY_BIDIRECTIONAL) {
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.color === 1) {
+                        continue;
+                    }
 
-                let belowRow = piece.row + 1;
-                let col = piece.col;
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
 
-                if (getPieceOn(belowRow, col, this.pieces) == null) {
-                    if (onBoard(belowRow, col)) {
-                        piece.row = belowRow;
-                        piece.col = col;
+                    let belowRow = piece.row + 1;
+                    let col = piece.col;
+
+                    if (getPieceOn(belowRow, col, this.pieces) == null) {
+                        if (onBoard(belowRow, col)) {
+                            piece.row = belowRow;
+                            piece.col = col;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.color === 0) {
+                        continue;
+                    }
+
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let belowRow = piece.row - 1;
+                    let col = piece.col;
+
+                    if (getPieceOn(belowRow, col, this.pieces) == null) {
+                        if (onBoard(belowRow, col)) {
+                            piece.row = belowRow;
+                            piece.col = col;
+                        }
                     }
                 }
             }
@@ -575,7 +641,16 @@ function getLegalMoves(piece, gamestate, simulated = false) {
         }
 
         // Castling
-        // TODO: add
+
+        // Long castling
+        if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null  && gamestate.longCastlingAllowed) {
+            legalMoves.push([row, col + 2]);
+        }
+
+        // Short castling
+        if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
+            legalMoves.push([row, col - 2]);
+        }
     }
 
     function testLegality(move, piece, gamestate) {
@@ -632,6 +707,18 @@ function getKingLocation(whichPlayer, pieces) {
     throw 'No king of this color on the board!';
 }
 
+function inCheck(king, state) {
+    for (let piece of state.pieces) {
+        for (let move of getLegalMoves(piece, state, true)) {
+            if (move[0] === king.row && move[1] === king.col) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 function updateBoard(selectedPiece) {
     drawBoard();
 
@@ -658,6 +745,11 @@ function updateBoard(selectedPiece) {
             }
 
             legalMoves.forEach(highlightLegalMove);
+        }
+
+        if (piece.type === KING && inCheck(piece, globalGameState)) {
+            ctx.fillStyle = '#ff4c4c';
+            ctx.fillRect(piece.col * SIZE, piece.row * SIZE, SIZE, SIZE);
         }
 
         if (piece === selectedPiece) {
