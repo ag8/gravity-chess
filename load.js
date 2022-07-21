@@ -1,0 +1,3 @@
+function customLoadFunction() {
+    return false;
+}

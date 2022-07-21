@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="works with refreshes now!!!">
-      <change afterPath="$PROJECT_DIR$/opening_theory.html" afterDir="false" />
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fix some multiplayer bugs">
+      <change afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/load.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/multi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/simple.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/multiplayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-game.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/ai-game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/old/ai.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/old/game_index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multiplayer.html" beforeDir="false" afterPath="$PROJECT_DIR$/old/multiplayer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multiplayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/multiplayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +29,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -121,17 +132,19 @@
       <recent name="C:\development\gravity-chess" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/old" />
       <recent name="C:\development\gravity-chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.game_index.html">
-    <configuration name="game_index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/game_index.html" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="JavaScript Debug.index.html">
+    <configuration name="game_index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/old/game_index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/gravity-chess/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="multiplayer.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/multiplayer.html" useBuiltInWebServerPort="true">
+    <configuration name="multiplayer.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/old/multiplayer.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="test.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/test.html" useBuiltInWebServerPort="true">
@@ -142,10 +155,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="JavaScript Debug.game_index.html" />
         <item itemvalue="JavaScript Debug.multiplayer.html" />
         <item itemvalue="JavaScript Debug.test.html" />
-        <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="JavaScript Debug.theory.html" />
       </list>
     </recent_temporary>
@@ -169,7 +182,9 @@
       <workItem from="1657505802662" duration="7972000" />
       <workItem from="1657502662392" duration="655000" />
       <workItem from="1657562456050" duration="5720000" />
-      <workItem from="1657643592039" duration="5207000" />
+      <workItem from="1657643592039" duration="6475000" />
+      <workItem from="1657727428344" duration="25000" />
+      <workItem from="1658354280123" duration="6644000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -220,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657566761809</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fix some multiplayer bugs">
+      <created>1657652248165</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1657652248165</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -282,18 +304,19 @@
     <MESSAGE value="theory is working!!" />
     <MESSAGE value="multiplauyer" />
     <MESSAGE value="works with refreshes now!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="works with refreshes now!!!" />
+    <MESSAGE value="fix some multiplayer bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix some multiplayer bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game.js</url>
+          <url>file://$PROJECT_DIR$/old/game.js</url>
           <line>521</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
-          <url>file://$PROJECT_DIR$/game.js</url>
+          <url>file://$PROJECT_DIR$/old/game.js</url>
           <line>108</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
@@ -323,12 +346,12 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game.js</url>
+          <url>file://$PROJECT_DIR$/old/game.js</url>
           <line>757</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game.js</url>
+          <url>file://$PROJECT_DIR$/old/game.js</url>
           <line>770</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
@@ -338,9 +361,27 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/multiplayer.js</url>
+          <url>file://$PROJECT_DIR$/old/multiplayer.js</url>
           <line>1065</line>
           <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/simple.js</url>
+          <line>2</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>652</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>571</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

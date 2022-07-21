@@ -42,3 +42,39 @@ function copyTextToClipboard(text) {
         console.error('Async: Could not copy text: ', err);
     });
 }
+
+function getPieceRepresentationAt(row, col, pieces) {
+    for (let piece of pieces) {
+        if (piece.row === row && piece.col === col) {
+            if (piece.type === PAWN) {
+                return "p";
+            } else if (piece.type === ROOK) {
+                return "R";
+            } else if (piece.type === KNIGHT) {
+                return "N";
+            } else if (piece.type === BISHOP) {
+                return "B";
+            } else if (piece.type === QUEEN) {
+                return "Q";
+            } else if (piece.type === KING) {
+                return "K";
+            }
+        }
+    }
+
+    return ".";
+}
+
+function prettyPrint(pieces) {
+    let line = "";
+
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            line += getPieceRepresentationAt(row, col, pieces);
+        }
+
+        line += "\n";
+    }
+
+    console.log(line);
+}
