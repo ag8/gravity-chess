@@ -10,7 +10,7 @@ const GRAVITY_BIDIRECTIONAL = 102;
 const GRAVITY_LEFT = 103;
 const GRAVITY_RIGHT = 104;
 const GRAVITY_ALTERNATING = 105;
-// const GRAVITY_HOKEYPOKEY = 106;
+const GRAVITY_HOKEYPOKEY = 106;
 
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
@@ -60,7 +60,11 @@ class GameState {
         this.shortCastlingAllowed = true;
         this.longCastlingAllowed = true;
 
-        this.gravityStyle = GRAVITY_STANDARD;
+        if (typeof CHOSENGRAVSTYLE !== 'undefined') {
+            this.gravityStyle = CHOSENGRAVSTYLE;
+        } else {
+            this.gravityStyle = GRAVITY_STANDARD;
+        }
     }
 
     setGravityStyle(gravityStyle) {
@@ -247,6 +251,120 @@ class GameState {
             }
         } else if (this.gravityStyle === GRAVITY_ALTERNATING) {
             for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let newRow = piece.row + 1;
+                    let col = piece.col;
+                    if (col % 2 === 0) {
+                        newRow = piece.row - 1;
+                    }
+
+                    if (getPieceOn(newRow, col, this.pieces) == null) {
+                        if (onBoard(newRow, col)) {
+                            piece.row = newRow;
+                            piece.col = col;
+                        }
+                    }
+                }
+            }
+        } else if (this.gravityStyle === GRAVITY_HOKEYPOKEY) {
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let belowRow = piece.row + 1;
+                    let col = piece.col;
+
+                    if (getPieceOn(belowRow, col, this.pieces) == null) {
+                        if (onBoard(belowRow, col)) {
+                            piece.row = belowRow;
+                            piece.col = col;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 8; i++) {
+                for (const piece of this.pieces) {
+                    if (piece.color === 1) {
+                        continue;
+                    }
+
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let belowRow = piece.row + 1;
+                    let col = piece.col;
+
+                    if (getPieceOn(belowRow, col, this.pieces) == null) {
+                        if (onBoard(belowRow, col)) {
+                            piece.row = belowRow;
+                            piece.col = col;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 8; i++) {
+                for (const piece of this.pieces) {
+                    if (piece.color === 0) {
+                        continue;
+                    }
+
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let belowRow = piece.row - 1;
+                    let col = piece.col;
+
+                    if (getPieceOn(belowRow, col, this.pieces) == null) {
+                        if (onBoard(belowRow, col)) {
+                            piece.row = belowRow;
+                            piece.col = col;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 8; i++) {
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let leftCol = piece.col - 1;
+                    let row = piece.row;
+
+                    if (getPieceOn(row, leftCol, this.pieces) == null) {
+                        if (onBoard(row, leftCol)) {
+                            piece.row = row;
+                            piece.col = leftCol;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 8; i++) {
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let rightCol = piece.col + 1;
+                    let row = piece.row;
+
+                    if (getPieceOn(row, rightCol, this.pieces) == null) {
+                        if (onBoard(row, rightCol)) {
+                            piece.row = row;
+                            piece.col = rightCol;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 8; i++) {
                 for (const piece of this.pieces) {
                     if (piece.type === PAWN) {
                         continue;

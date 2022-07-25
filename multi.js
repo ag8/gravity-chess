@@ -12,6 +12,8 @@ function loadFromServer(gameData) {
     let gamePieces = JSON.parse(parts[1]);  // TODO get castling data etc from server
     globalGameState = new GameState(gamePieces);
     turn = 1 - parseInt(parts[2], 10);
+    console.log("Setting gravity style " + parts[3] + "");
+    globalGameState.setGravityStyle(parseInt(parts[3], 10));
     console.log("Data loaded from server.");
     updateBoard();
 }
