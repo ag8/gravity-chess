@@ -143,7 +143,8 @@
         </div>
         <div id="righteron">
             <p id="opening-name"></p>
-            <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button>
+            <button onclick="globalGameState.setGravityStyle(parseInt(window.prompt('Which gravity style do you want?\n(101 - normal, 102 - ender, 103 - left, 104 - right, 105 - alt, 106 - hokey)', '101')))">Set Gravity</button><br><br>
+            <button onclick="fallbackCopyTextToClipboard(gameRecord);">Copy game</button><br/>
             <div id="game-record-flex">
             </div>
         </div>
