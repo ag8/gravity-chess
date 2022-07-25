@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fixed promotion">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="implemented grav loading">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multi.js" beforeDir="false" afterPath="$PROJECT_DIR$/multi.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +176,7 @@
       <workItem from="1658354280123" duration="11738000" />
       <workItem from="1658540507085" duration="3660000" />
       <workItem from="1658707542273" duration="426000" />
-      <workItem from="1658708175180" duration="2505000" />
+      <workItem from="1658708175180" duration="3217000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -277,7 +276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658708767512</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="implemented grav loading">
+      <created>1658711953792</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1658711953792</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -346,7 +352,8 @@
     <MESSAGE value="added fixed legal move highlighting to multiplayer" />
     <MESSAGE value="ender's game" />
     <MESSAGE value="fixed promotion" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed promotion" />
+    <MESSAGE value="implemented grav loading" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented grav loading" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

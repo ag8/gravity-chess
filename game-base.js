@@ -1116,7 +1116,7 @@ function recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special) {
 }
 
 function updateOpeningName() {
-    httpGetAsync("https://gravity-chess.andrew.gr/game-test/get_opening.php?record=" + gameRecord, updateOpeningDiv);
+    httpGetAsync("https://gravity-chess.andrew.gr/game-test/get_opening.php?gravity=" + globalGameState.gravityStyle + "&record=" + gameRecord, updateOpeningDiv);
 }
 
 function updateOpeningDiv(openingName) {
