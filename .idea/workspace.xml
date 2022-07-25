@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added fixed legal move highlighting to multiplayer">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="ender's game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loadmulti.js" beforeDir="false" afterPath="$PROJECT_DIR$/loadmulti.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multi.js" beforeDir="false" afterPath="$PROJECT_DIR$/multi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/simple.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,15 +110,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/dyusha/fun_things/gravity-chess"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dyusha/fun_things/gravity-chess&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -173,7 +178,10 @@
       <workItem from="1657562456050" duration="5720000" />
       <workItem from="1657643592039" duration="6475000" />
       <workItem from="1657727428344" duration="25000" />
-      <workItem from="1658354280123" duration="10535000" />
+      <workItem from="1658354280123" duration="11738000" />
+      <workItem from="1658540507085" duration="3660000" />
+      <workItem from="1658707542273" duration="426000" />
+      <workItem from="1658708175180" duration="576000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -259,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658367538866</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="ender's game">
+      <created>1658369172051</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1658369172051</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -326,7 +341,8 @@
     <MESSAGE value="working legal moves with lookahead??" />
     <MESSAGE value="fixed illegal double pawn push through piece" />
     <MESSAGE value="added fixed legal move highlighting to multiplayer" />
-    <option name="LAST_COMMIT_MESSAGE" value="added fixed legal move highlighting to multiplayer" />
+    <MESSAGE value="ender's game" />
+    <option name="LAST_COMMIT_MESSAGE" value="ender's game" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -388,9 +404,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>164</line>
-          <properties lambdaOrdinal="-1" />
+          <line>169</line>
           <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>138</line>
+          <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

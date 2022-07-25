@@ -219,58 +219,59 @@ function drawTimers(data) {
     }
 }
 
-canvas.addEventListener('mousedown', function (e) {
-    console.log("CURENT TURN IS " + turn);
+function eventListener() {
+    canvas.addEventListener('mousedown', function (e) {
+        console.log("CURENT TURN IS " + turn);
 
-    if (turn !== YOURCOLOR) {
-        return;
-    } else {
-        console.log("I AM CLAIMING THAT " + turn + "===" + YOURCOLOR);
-    }
-
-    let [x, y] = getCursorPosition(canvas, e);
-
-    console.log("You clicked on " + x + ", " + y);
-
-    if (state === 0) {  // Selecting a piece
-        // Detect whether this selected a piece
-        selectedPiece = getSelectedPiece(x, y);
-
-        if (selectedPiece == null) {
-            console.log("you clicked nowhere");
+        if (turn !== YOURCOLOR) {
             return;
-        }
-        if (selectedPiece.color !== turn) {
-            console.log("you clicked the other player's piece");
-            return;
+        } else {
+            console.log("I AM CLAIMING THAT " + turn + "===" + YOURCOLOR);
         }
 
-        console.log("You chose the piece " + selectedPiece.type);
+        let [x, y] = getCursorPosition(canvas, e);
 
-        state = 1;
-    } else if (state === 1) { // Selecting a square to move to
-        let [row, col] = getSelectedSquare(x, y);
+        console.log("You clicked on " + x + ", " + y);
 
-        if (getLegalMoves(structuredClone(selectedPiece), structuredClone(globalGameState)).some(a => [row, col].every((v, i) => v === a[i]))) {
-            let oldPieceCopy = JSON.parse(JSON.stringify(selectedPiece));
-            let [capture, oldCol, oldRow, special, newPieces] = globalGameState.movePiece(selectedPiece, row, col);
-            globalGameState.pieces = newPieces;
+        if (state === 0) {  // Selecting a piece
+            // Detect whether this selected a piece
+            selectedPiece = getSelectedPiece(x, y);
 
-            globalGameState.updateGravity();
+            if (selectedPiece == null) {
+                console.log("you clicked nowhere");
+                return;
+            }
+            if (selectedPiece.color !== turn) {
+                console.log("you clicked the other player's piece");
+                return;
+            }
 
-            recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
+            console.log("You chose the piece " + selectedPiece.type);
 
-            // Send to server after computation is done (in case of refresh)
-            sendToServer(oldPieceCopy, row, col);
+            state = 1;
+        } else if (state === 1) { // Selecting a square to move to
+            let [row, col] = getSelectedSquare(x, y);
 
-            turn = 1 - turn;
+            if (getLegalMoves(structuredClone(selectedPiece), structuredClone(globalGameState)).some(a => [row, col].every((v, i) => v === a[i]))) {
+                let oldPieceCopy = JSON.parse(JSON.stringify(selectedPiece));
+                let [capture, oldCol, oldRow, special, newPieces] = globalGameState.movePiece(selectedPiece, row, col);
+                globalGameState.pieces = newPieces;
+
+                globalGameState.updateGravity();
+
+                recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
+
+                // Send to server after computation is done (in case of refresh)
+                sendToServer(oldPieceCopy, row, col);
+
+                turn = 1 - turn;
+            }
+
+            selectedPiece = null;
+            state = 0;
         }
 
-        selectedPiece = null;
-        state = 0;
-    }
 
-
-    updateBoard(selectedPiece);
-});
-
+        updateBoard(selectedPiece);
+    });
+}

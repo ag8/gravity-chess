@@ -9,4 +9,7 @@ function getInfoFromServer() {
     } else {
         document.getElementById("opp-timeh").classList.add("active");
     }
+
+    // Load canvas event listener
+    eventListener();
 }

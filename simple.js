@@ -42,3 +42,4 @@ canvas.addEventListener('mousedown', function (e) {
 
     updateBoard(selectedPiece);
 });
+

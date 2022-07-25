@@ -9,7 +9,8 @@ const GRAVITY_STANDARD = 101;
 const GRAVITY_BIDIRECTIONAL = 102;
 const GRAVITY_LEFT = 103;
 const GRAVITY_RIGHT = 104;
-const GRAVITY_HOKEYPOKEY = 106;
+const GRAVITY_ALTERNATING = 105;
+// const GRAVITY_HOKEYPOKEY = 106;
 
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => {
     img.onload = img.onerror = resolve;
@@ -59,7 +60,11 @@ class GameState {
         this.shortCastlingAllowed = true;
         this.longCastlingAllowed = true;
 
-        this.gravityStyle = GRAVITY_BIDIRECTIONAL;
+        this.gravityStyle = GRAVITY_STANDARD;
+    }
+
+    setGravityStyle(gravityStyle) {
+        this.gravityStyle = gravityStyle;
     }
 
     movePieceTo(piece, toRow, toCol) {
@@ -132,7 +137,7 @@ class GameState {
         // Check if the piece is a promoted pawn
         if (piece.color === 0 && piece.row === 7 && piece.type === PAWN || piece.color === 1 && piece.row === 0 && piece.type === PAWN) {
             piece.type = askForPromotion();
-            if (numPieces <= pieces.length) {
+            if (numPieces <= this.pieces.length) {
                 special = getCoordsName(piece.row, piece.col) + "=" + getPieceName(piece, 0, 0).substring(0, 1);
             } else {
                 special = getCoordsName(piece.row, oldCol).substring(0, 1) + "x" + getCoordsName(piece.row, piece.col) + "=" + getPieceName(piece, 0, 0).substring(0, 1);
@@ -199,6 +204,63 @@ class GameState {
                     if (getPieceOn(belowRow, col, this.pieces) == null) {
                         if (onBoard(belowRow, col)) {
                             piece.row = belowRow;
+                            piece.col = col;
+                        }
+                    }
+                }
+            }
+        } else if (this.gravityStyle === GRAVITY_LEFT) {
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let leftCol = piece.col - 1;
+                    let row = piece.row;
+
+                    if (getPieceOn(row, leftCol, this.pieces) == null) {
+                        if (onBoard(row, leftCol)) {
+                            piece.row = row;
+                            piece.col = leftCol;
+                        }
+                    }
+                }
+            }
+        } else if (this.gravityStyle === GRAVITY_RIGHT) {
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let rightCol = piece.col + 1;
+                    let row = piece.row;
+
+                    if (getPieceOn(row, rightCol, this.pieces) == null) {
+                        if (onBoard(row, rightCol)) {
+                            piece.row = row;
+                            piece.col = rightCol;
+                        }
+                    }
+                }
+            }
+        } else if (this.gravityStyle === GRAVITY_ALTERNATING) {
+            for (let i = 0; i < 8; i++) {  // Max eight gravity updates
+                for (const piece of this.pieces) {
+                    if (piece.type === PAWN) {
+                        continue;
+                    }
+
+                    let newRow = piece.row + 1;
+                    let col = piece.col;
+                    if (col % 2 === 0) {
+                        newRow = piece.row - 1;
+                    }
+
+                    if (getPieceOn(newRow, col, this.pieces) == null) {
+                        if (onBoard(newRow, col)) {
+                            piece.row = newRow;
                             piece.col = col;
                         }
                     }
@@ -284,7 +346,9 @@ function getLegalMoves(piece, gamestate, simulated = false) {
     if (piece.type === PAWN) {
         if (piece.color === 0) {
             if (getPieceOn(row + 1, col, pieces) == null) {
-                legalMoves.push([row + 1, col]);
+                if (!(row === 6 && simulated)) {
+                    legalMoves.push([row + 1, col]);
+                }
             }
 
             if (row === 1) {
@@ -310,7 +374,9 @@ function getLegalMoves(piece, gamestate, simulated = false) {
             }
         } else {
             if (getPieceOn(row - 1, col, pieces) == null) {
-                legalMoves.push([row - 1, col]);
+                if (!(row === 1 && simulated)) {
+                    legalMoves.push([row - 1, col]);
+                }
             }
 
             if (row === 6) {
@@ -643,7 +709,7 @@ function getLegalMoves(piece, gamestate, simulated = false) {
         // Castling
 
         // Long castling
-        if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null  && gamestate.longCastlingAllowed) {
+        if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null && gamestate.longCastlingAllowed) {
             legalMoves.push([row, col + 2]);
         }
 
@@ -655,7 +721,7 @@ function getLegalMoves(piece, gamestate, simulated = false) {
 
     function testLegality(move, piece, gamestate) {
         let hypotheticalGamestate = structuredClone(gamestate);
-        let [_, __, ___, ____, newPieces]  = hypotheticalGamestate.movePiece(piece, move[0], move[1]);
+        let [_, __, ___, ____, newPieces] = hypotheticalGamestate.movePiece(piece, move[0], move[1]);
         hypotheticalGamestate.pieces = newPieces;
         hypotheticalGamestate.updateGravity();
 
@@ -925,6 +991,20 @@ function recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special) {
     div.innerHTML = currentMoveRecord;
 
     document.getElementById("game-record-flex").appendChild(div);
+
+
+    // Get the name of the opening, if there is one
+    updateOpeningName();
+}
+
+function updateOpeningName() {
+    httpGetAsync("https://gravity-chess.andrew.gr/game-test/get_opening.php?record=" + gameRecord, updateOpeningDiv);
+}
+
+function updateOpeningDiv(openingName) {
+    if (openingName !== "None") {
+        document.getElementById("opening-name").innerHTML = openingName;
+    }
 }
 
 function gameOver() {
