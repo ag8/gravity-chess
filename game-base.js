@@ -90,7 +90,7 @@ class GameState {
             this.pieces = this.pieces.filter(piece => !(piece.row === getPieceOn(toRow, toCol, this.pieces).row && piece.col === getPieceOn(toRow, toCol, this.pieces).col))
         }
         // Then, check for the french move
-        if (this.enPassantAllowed && toRow === this.enPassantTargetRow && toCol === this.enPassantTargetCol) {
+        if (this.enPassantAllowed && toRow === this.enPassantTargetRow && toCol === this.enPassantTargetCol && piece.type === PAWN) {
             this.pieces = this.pieces.filter(piece => !(piece.row === this.enPassantVictimRow && piece.col === this.enPassantVictimCol))
         }
         // Next, check if this disabled castling
