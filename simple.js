@@ -1,4 +1,7 @@
 
+let gameStates = Array();
+let gameRecords = Array();
+
 canvas.addEventListener('mousedown', function (e) {
     let [x, y] = getCursorPosition(canvas, e);
 
@@ -34,6 +37,8 @@ canvas.addEventListener('mousedown', function (e) {
             recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
 
             turn = 1 - turn;
+            gameStates.push(structuredClone(globalGameState));
+            gameRecords.push(structuredClone(gameRecord));
         }
 
         selectedPiece = null;
@@ -43,3 +48,49 @@ canvas.addEventListener('mousedown', function (e) {
     updateBoard(selectedPiece);
 });
 
+function loadGameRecord() {
+    console.log("Loading game record!");
+    let sections = gameRecord.split(". ");
+    document.getElementById("game-record-flex").innerHTML = "";
+    for (let i = 1; i < sections.length; i++) {
+        console.log("Looking at ")
+        let plies = sections[i].split(" ");
+        for (let j = 0; j < Math.min(plies.length, 2); j++) {
+            if (plies[j].length === 0) {
+                continue;
+            }
+            console.log("Loading ply " + plies[j] + ".");
+            let div = document.createElement("div");
+            div.className = "move-record";
+            if (j === 0) {
+                div.innerHTML = (i) + ". ";
+            } else {
+                div.innerHTML = ""
+            }
+            div.innerHTML += plies[j];
+            document.getElementById("game-record-flex").appendChild(div);
+        }
+    }
+    move = sections.length - 1;
+}
+
+function loadState(index) {
+    if (index < 0) {
+        return;
+    }
+
+    globalGameState = gameStates[index];
+    gameStates = gameStates.slice(0, index);
+    gameRecord = gameRecords[index];
+    gameRecords = gameRecords.slice(0, index);
+    turn = 1 - index % 2;
+    state = 0;
+    gameStates.push(structuredClone(globalGameState));
+    gameRecords.push(structuredClone(gameRecord));
+    updateBoard();
+    loadGameRecord();
+}
+
+function back() {
+    loadState(gameStates.length - 2);
+}

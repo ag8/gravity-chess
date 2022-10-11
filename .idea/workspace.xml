@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="gravity set">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fixed michelle's en passant error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/simple.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +178,10 @@
       <workItem from="1658540507085" duration="3660000" />
       <workItem from="1658707542273" duration="426000" />
       <workItem from="1658708175180" duration="5784000" />
-      <workItem from="1659411942609" duration="298000" />
+      <workItem from="1659411942609" duration="963000" />
+      <workItem from="1661275411644" duration="613000" />
+      <workItem from="1662499059068" duration="168000" />
+      <workItem from="1665444917042" duration="1840000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -298,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658712634595</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fixed michelle's en passant error">
+      <created>1659412312756</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1659412312756</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -370,7 +381,8 @@
     <MESSAGE value="implemented grav loading" />
     <MESSAGE value="added variant opening loading" />
     <MESSAGE value="gravity set" />
-    <option name="LAST_COMMIT_MESSAGE" value="gravity set" />
+    <MESSAGE value="fixed michelle's en passant error" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed michelle's en passant error" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -441,10 +453,16 @@
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>84</line>
+          <url>file://$PROJECT_DIR$/simple.js</url>
+          <line>81</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="51" />
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>841</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
