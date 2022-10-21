@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fixed michelle's en passant error">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added undo functionality to simple.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/simple.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -181,7 +180,8 @@
       <workItem from="1659411942609" duration="963000" />
       <workItem from="1661275411644" duration="613000" />
       <workItem from="1662499059068" duration="168000" />
-      <workItem from="1665444917042" duration="1840000" />
+      <workItem from="1665444917042" duration="3168000" />
+      <workItem from="1666385734500" duration="1418000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -309,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659412312756</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="added undo functionality to simple.js">
+      <created>1665446834157</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1665446834157</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -382,7 +389,8 @@
     <MESSAGE value="added variant opening loading" />
     <MESSAGE value="gravity set" />
     <MESSAGE value="fixed michelle's en passant error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed michelle's en passant error" />
+    <MESSAGE value="added undo functionality to simple.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="added undo functionality to simple.js" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -453,16 +461,15 @@
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/simple.js</url>
-          <line>81</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
           <line>841</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/simple.js</url>
+          <line>120</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
