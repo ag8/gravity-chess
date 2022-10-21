@@ -826,14 +826,16 @@ function getLegalMoves(piece, gamestate, simulated = false) {
 
         // Castling
 
-        // Long castling
-        if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null && gamestate.longCastlingAllowed) {
-            legalMoves.push([row, col + 2]);
-        }
+        if (piece.color !== 1) {
+            // Long castling
+            if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null && gamestate.longCastlingAllowed) {
+                legalMoves.push([row, col + 2]);
+            }
 
-        // Short castling
-        if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
-            legalMoves.push([row, col - 2]);
+            // Short castling
+            if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
+                legalMoves.push([row, col - 2]);
+            }
         }
     }
 
