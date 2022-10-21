@@ -1,4 +1,3 @@
-
 let gameStates = Array();
 let gameRecords = Array();
 
@@ -157,4 +156,60 @@ function createPiecesFromFen(fen) {
     }
 
     return pieces;
+}
+
+function getFEN() {
+    let fen = "";
+    let counter = 0;
+
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+
+            let c = "";
+
+            // Get the piece here, if any
+            for (const piece of globalGameState.pieces) {
+                if (piece.row === row && piece.col === col) {
+
+                    if (piece.type === ROOK) {
+                        c = "r";
+                    } else if (piece.type === KNIGHT) {
+                        c = "n";
+                    } else if (piece.type === BISHOP) {
+                        c = "b";
+                    } else if (piece.type === QUEEN) {
+                        c = "q";
+                    } else if (piece.type === KING) {
+                        c = "k";
+                    } else if (piece.type === PAWN) {
+                        c = "p";
+                    }
+
+                    if (piece.color === 0) {
+                        c = c.toUpperCase();
+                    }
+                }
+            }
+
+            if (c.length > 0) {
+                if (counter > 0) {
+                    fen += counter.toString();
+                }
+
+                counter = 0;
+                fen += c;
+            } else {
+                counter++;
+            }
+        }
+
+        if (counter > 0) {
+            fen += counter.toString();
+        }
+
+        counter = 0;
+        fen += "/";
+    }
+
+    return fen.substring(0, fen.length - 1);
 }
