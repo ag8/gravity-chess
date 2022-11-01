@@ -829,12 +829,23 @@ function getLegalMoves(piece, gamestate, simulated = false) {
         if (piece.color !== 1) {
             // Long castling
             if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null && gamestate.longCastlingAllowed) {
-                legalMoves.push([row, col + 2]);
+                // Check whether rook can move right
+                let rookPos = getRightRookPosition(pieces);
+
+                if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] - 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] - 2, pieces) === null && getPieceOn(rookPos[0], rookPos[1] - 3, pieces) === null) {
+                    legalMoves.push([row, col + 2]);
+                }
             }
 
             // Short castling
             if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
-                legalMoves.push([row, col - 2]);
+                let rookPos = getLeftRookPosition(pieces);
+
+                console.log("Rook position:" + rookPos);
+
+                if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] + 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] + 2, pieces) === null) {
+                    legalMoves.push([row, col - 2]);
+                }
             }
         }
     }
@@ -881,6 +892,26 @@ function getLegalMoves(piece, gamestate, simulated = false) {
     }
 
     return actuallyLegalMoves;
+}
+
+function getLeftRookPosition(pieces) {
+    for (const piece of pieces) {
+        if (piece.type === ROOK && piece.col === 0 && piece.color === 0) {
+            return [piece.row, piece.col];
+        }
+    }
+
+    return [-1, -1];
+}
+
+function getRightRookPosition(pieces) {
+    for (const piece of pieces) {
+        if (piece.type === ROOK && piece.col === 7 && piece.color === 0) {
+            return [piece.row, piece.col];
+        }
+    }
+
+    return [-1, -1];
 }
 
 function getKingLocation(whichPlayer, pieces) {

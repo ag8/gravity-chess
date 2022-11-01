@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="no more black castling">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="fixed castling issue">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -329,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666387356154</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fixed castling issue">
+      <created>1667322108189</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1667322108189</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -405,7 +413,8 @@
     <MESSAGE value="added undo functionality to simple.js" />
     <MESSAGE value="added basic fen loading" />
     <MESSAGE value="no more black castling" />
-    <option name="LAST_COMMIT_MESSAGE" value="no more black castling" />
+    <MESSAGE value="fixed castling issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed castling issue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -477,13 +486,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>843</line>
+          <line>854</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/simple.js</url>
           <line>119</line>
           <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>841</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="56" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
