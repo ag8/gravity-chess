@@ -33,7 +33,7 @@ canvas.addEventListener('mousedown', function (e) {
 
             globalGameState.updateGravity();
 
-            recordMove(selectedPiece, col, row, capture, oldCol, oldRow, special);
+            recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special);
 
             turn = 1 - turn;
             gameStates.push(structuredClone(globalGameState));
