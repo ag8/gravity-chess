@@ -94,11 +94,11 @@ class GameState {
             this.pieces = this.pieces.filter(piece => !(piece.row === this.enPassantVictimRow && piece.col === this.enPassantVictimCol))
         }
         // Next, check if this disabled castling
-        if (piece.type === KING) {
+        if (piece.type === KING && piece.color === 0) {
             this.shortCastlingAllowed = false;
             this.longCastlingAllowed = false;
         }
-        if (piece.type === ROOK) {
+        if (piece.type === ROOK && piece.color === 0) {
             if (piece.col === 0) {
                 this.shortCastlingAllowed = false;
             } else if (piece.col === 7) {
