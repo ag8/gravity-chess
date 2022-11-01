@@ -14,6 +14,33 @@
         #letters {
             margin-bottom: 10px;
             margin-left: -555px;
+            /*background-color: red;*/
+            /*display: inline-block;*/
+            /*float: left;*/
+        }
+
+        @media screen and (max-width: 1466px) {
+            #letters {
+                margin-bottom: 10px;
+                margin-left: 42px;
+                /*background-color: red;*/
+                display: inline-block;
+                float: left;
+            }
+        }
+
+        @media screen and (max-width: 866px) {
+            /*#letters {*/
+            /*    visibility: hidden; !* screen is too small *!*/
+            /*}*/
+
+            #letters:after {
+                content: 'screen too smol'
+            }
+        }
+
+        #flexor {
+            width: 400px;
         }
 
         #wrapper {
@@ -119,7 +146,7 @@
         <div class="letter">c</div>
         <div class="letter">b</div>
         <div class="letter">a</div>
-
+        <div id="flexor"></div>
     </div>
     <div id="container">
         <div id="lefteron">
@@ -143,10 +170,16 @@
         </div>
         <div id="righteron">
             <p id="opening-name"></p>
-            <button onclick="back()">Undo</button><br/><br/>
-            <button onclick="globalGameState.setGravityStyle(parseInt(window.prompt('Which gravity style do you want?\n(101 - normal, 102 - ender, 103 - left, 104 - right, 105 - alt, 106 - hokey)', '101')))">Set Gravity</button><br><br>
-            <button onclick="copyTextToClipboard(gameRecord);">Copy game</button><br/><br/>
-            <button onclick="copyTextToClipboard(getFEN());">Copy FEN</button><br/>
+            <button onclick="back()">Undo</button>
+            <br/><br/>
+            <button onclick="globalGameState.setGravityStyle(parseInt(window.prompt('Which gravity style do you want?\n(101 - normal, 102 - ender, 103 - left, 104 - right, 105 - alt, 106 - hokey)', '101')))">
+                Set Gravity
+            </button>
+            <br><br>
+            <button onclick="copyTextToClipboard(gameRecord);">Copy game</button>
+            <br/><br/>
+            <button onclick="copyTextToClipboard(getFEN());">Copy FEN</button>
+            <br/>
             <div id="game-record-flex">
             </div>
         </div>
