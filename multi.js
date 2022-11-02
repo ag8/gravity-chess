@@ -42,6 +42,10 @@ function loadGameRecord() {
     move = sections.length - 1;
 }
 
+function back() {
+    loadState(gameStates.length - 2);
+}
+
 function httpGetAsync(theUrl, callback) {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
