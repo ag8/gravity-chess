@@ -9,4 +9,4 @@ Warning: this is hackathon-level code:)
 
 Clone, and run `index.html`.
 
-Requires lodash.js, which can be downloaded from [https://raw.githubusercontent.com/lodash/lodash/4.17.15-npm/lodash.js](here).
+Requires lodash.js, which can be downloaded from [here](https://raw.githubusercontent.com/lodash/lodash/4.17.15-npm/lodash.js).
