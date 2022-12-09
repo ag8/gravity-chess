@@ -1141,9 +1141,11 @@ function recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special) {
     let winner = gameOver();
 
     if (winner === 1) {
-        currentMoveRecord += " 0–1"
+        currentMoveRecord = currentMoveRecord.slice(0, -1);
+        currentMoveRecord += "# <span style=\"white-space: nowrap\">0–1</span>"
     } else if (winner === 0) {
-        currentMoveRecord += " 1–0"
+        currentMoveRecord = currentMoveRecord.slice(0, -1);
+        currentMoveRecord += "# <span style=\"white-space: nowrap\">1–0</span>"
     }
 
     gameRecord += currentMoveRecord;
@@ -1176,17 +1178,20 @@ function gameOver() {
      * @type {number}
      */
 
-    let numKings = 0;
-    let winner = -1;
-
+    let numLegalMoves = 0;
     for (let piece of globalGameState.pieces) {
-        if (piece.type === KING) {
-            numKings++;
-            winner = piece.color;
+        if (piece.color === 1 - turn) {
+            // Sooo sketchy lol
+            turn = 1 - turn;
+            let legalMoves = getLegalMoves(piece, globalGameState)
+            turn = 1 - turn;
+            numLegalMoves += legalMoves.length;
         }
     }
 
-    return numKings === 2 ? -1 : winner;
+    console.log(numLegalMoves);
+    console.log("");
+    if (numLegalMoves === 0) return turn;
 }
 
 function getPieceName(piece, capture, oldCol, oldRow) {
