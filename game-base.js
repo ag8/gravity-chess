@@ -116,14 +116,16 @@ class GameState {
         // Check for castling
         // Long
         if (piece.type === KING && piece.col - oldCol === 2) {
-            let searchRook = new Piece(7, 0, ROOK, piece.color);
-            this.movePieceTo(searchRook, 0, 4);
+            let rookPosition = getRightRookPosition(this.pieces);
+            let searchRook = getPieceOn(rookPosition[0], rookPosition[1], this.pieces);
+            this.movePieceTo(searchRook, rookPosition[0], rookPosition[1] - 3);
             special = "0-0-0";
         }
         // Short
         if (piece.type === KING && piece.col - oldCol === -2) {
-            let searchRook = new Piece(0, 0, ROOK, piece.color);
-            this.movePieceTo(searchRook, 0, 2);
+            let rookPosition = getLeftRookPosition(this.pieces);
+            let searchRook = getPieceOn(rookPosition[0], rookPosition[1], this.pieces);
+            this.movePieceTo(searchRook, rookPosition[0], rookPosition[1] + 2);
             special = "0-0";
         }
 
@@ -826,25 +828,35 @@ function getLegalMoves(piece, gamestate, simulated = false) {
 
         // Castling
 
-        if (piece.color !== 1) {
-            // Long castling
-            if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null && gamestate.longCastlingAllowed) {
-                // Check whether rook can move right
-                let rookPos = getRightRookPosition(pieces);
+        let castlingValid = false;
 
-                if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] - 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] - 2, pieces) === null && getPieceOn(rookPos[0], rookPos[1] - 3, pieces) === null) {
-                    legalMoves.push([row, col + 2]);
+        if (simulated) {
+            castlingValid = true;
+        } else {
+            castlingValid = !inCheck(piece, gamestate)
+        }
+
+        if (castlingValid) {
+            if (piece.color !== 1) {
+                // Long castling
+                if (getPieceOn(row, col + 1, pieces) === null && getPieceOn(row, col + 2, pieces) === null && getPieceOn(row, col + 3, pieces) === null && gamestate.longCastlingAllowed) {
+                    // Check whether rook can move right
+                    let rookPos = getRightRookPosition(pieces);
+
+                    if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] - 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] - 2, pieces) === null && getPieceOn(rookPos[0], rookPos[1] - 3, pieces) === null) {
+                        legalMoves.push([row, col + 2]);
+                    }
                 }
-            }
 
-            // Short castling
-            if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
-                let rookPos = getLeftRookPosition(pieces);
+                // Short castling
+                if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
+                    let rookPos = getLeftRookPosition(pieces);
 
-                console.log("Rook position:" + rookPos);
+                    console.log("Rook position:" + rookPos);
 
-                if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] + 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] + 2, pieces) === null) {
-                    legalMoves.push([row, col - 2]);
+                    if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] + 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] + 2, pieces) === null) {
+                        legalMoves.push([row, col - 2]);
+                    }
                 }
             }
         }
