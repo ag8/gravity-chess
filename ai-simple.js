@@ -203,7 +203,7 @@ function firstMove() {
     turn = 1 - turn;
 }
 
-let depth = 10;
+let depth = 6;
 
 function whiteMove(gamestate) {
     updateBoard();
