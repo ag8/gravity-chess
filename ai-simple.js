@@ -63,8 +63,12 @@ function evaluate(gamestate, color) {
                         sum += 2 * PAWN_VALUE;  // having a white pawn under the king is good
                     } else {
                         if (getPieceOn(piece.row - 1, piece.col - 1, gamestate.pieces) == null && getPieceOn(piece.row - 1, piece.col + 1, gamestate.pieces) == null) {
-                            sum += 4 * PAWN_VALUE;  // having a black pawn is even better, but only if it can't disappear
-                            blackPawnUnderKing = true;
+                            if (blackPawnUnderKing) {
+                                sum += 0.7 * PAWN_VALUE; // additional black pawns are good but not as much
+                            } else {
+                                sum += 4 * PAWN_VALUE;  // having a black pawn is even better, but only if it can't disappear
+                                blackPawnUnderKing = true;
+                            }
                         }
                     }
                 }
