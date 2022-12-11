@@ -1,11 +1,11 @@
 let gameStates = Array();
 let gameRecords = Array();
 
-const PAWN_VALUE = 40;
-const KNIGHT_VALUE = 50;
-const BISHOP_VALUE = 50;
-const ROOK_VALUE = 60;
-const QUEEN_VALUE = 80;
+const PAWN_VALUE = 1;
+const KNIGHT_VALUE = 3 * PAWN_VALUE;
+const BISHOP_VALUE = 3.5 * PAWN_VALUE;
+const ROOK_VALUE = 5 * PAWN_VALUE;
+const QUEEN_VALUE = 9 * PAWN_VALUE;
 const KING_VALUE = 10000;
 
 function whiteKingCol(gamestate) {
@@ -27,14 +27,11 @@ function evaluate(gamestate, color) {
 
     let sum = 0;
 
+    // First, just add the piece values together
     for (let piece of gamestate.pieces) {
         switch (piece.type) {
             case PAWN:
-                if (piece.col === whiteKingCol(gamestate) && piece.color === 0) {
-                    sum += piece.color === color ? 4 * PAWN_VALUE : -4 * PAWN_VALUE;
-                } else {
-                    sum += piece.color === color ? PAWN_VALUE : -PAWN_VALUE;
-                }
+                sum += piece.color === color ? PAWN_VALUE : -PAWN_VALUE;
                 break;
             case ROOK:
                 sum += piece.color === color ? ROOK_VALUE : -ROOK_VALUE;
@@ -53,6 +50,37 @@ function evaluate(gamestate, color) {
                 break;
             default:
                 throw Error("Illegal piece");
+        }
+    }
+
+    if (color === 0) {  // For white
+        let blackPawnUnderKing = false;
+
+        for (let piece of gamestate.pieces) {
+            if (piece.col === whiteKingCol(gamestate)) {
+                if (piece.type === PAWN) {
+                    if (piece.color === 0) {
+                        sum += 2 * PAWN_VALUE;  // having a white pawn under the king is good
+                    } else {
+                        if (getPieceOn(piece.row - 1, piece.col - 1, gamestate.pieces) == null && getPieceOn(piece.row - 1, piece.col + 1, gamestate.pieces) == null) {
+                            sum += 4 * PAWN_VALUE;  // having a black pawn is even better, but only if it can't disappear
+                            blackPawnUnderKing = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (let piece of gamestate.pieces) {
+            if (piece.col === whiteKingCol(gamestate)) {
+                if (piece.color === 1 && !blackPawnUnderKing) {
+                    if (piece.type === QUEEN) {
+                        sum -= 8 * PAWN_VALUE;  // Having a black queen under a white king is generally very bad
+                    } else if (piece.type === ROOK) {
+                        sum -= 3 * PAWN_VALUE;  // Having a rook under is scary but not as bad
+                    }
+                }
+            }
         }
     }
 

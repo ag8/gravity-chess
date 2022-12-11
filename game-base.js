@@ -1245,7 +1245,7 @@ function getCoordsName(row, col) {
 
 function askForPromotion() {
     // TODO TEMPORARY
-    return ROOK;
+    return QUEEN;
 
     console.log("PROMOTING");
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="options">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="Improved evaluation function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ai-simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/ai-game.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/ai-game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +187,7 @@
       <workItem from="1670559630403" duration="2808000" />
       <workItem from="1670735386425" duration="8000" />
       <workItem from="1670735454873" duration="8707000" />
-      <workItem from="1670778062393" duration="4271000" />
+      <workItem from="1670778062393" duration="6038000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -399,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670781941445</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="colorinh">
+      <created>1670782465300</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1670782465300</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -454,8 +461,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="multiplauyer" />
-    <MESSAGE value="works with refreshes now!!!" />
     <MESSAGE value="fix some multiplayer bugs" />
     <MESSAGE value="rewritten using gamestates" />
     <MESSAGE value="working legal moves with lookahead??" />
@@ -479,7 +484,9 @@
     <MESSAGE value="some ai stuff" />
     <MESSAGE value="working AI!" />
     <MESSAGE value="options" />
-    <option name="LAST_COMMIT_MESSAGE" value="options" />
+    <MESSAGE value="colorinh" />
+    <MESSAGE value="Improved evaluation function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved evaluation function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -566,7 +573,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>125</line>
+          <line>153</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -576,12 +583,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>208</line>
+          <line>236</line>
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>101</line>
+          <line>129</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="78" />
         </line-breakpoint>
