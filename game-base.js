@@ -45,7 +45,32 @@ class Piece {
         this.col = col;
         this.type = type;
         this.color = color;
+        this.view = this.toString();
     }
+
+    toString() {
+        let s = "";
+        if (this.type === PAWN) {
+            s += "P";
+        } else if (this.type === KNIGHT) {
+            s += "N";
+        } else if (this.type === BISHOP) {
+            s += "B";
+        } else if (this.type === ROOK) {
+            s += "R";
+        } else if (this.type === QUEEN) {
+            s += "Q";
+        } else if (this.type === KING) {
+            s += "K";
+        }
+        s += ["h", "g", "f", "e", "d", "c", "b", "a"][this.col];
+        s += (this.row - -1);
+        if (this.color === 1) {
+            s = s.toLowerCase();
+        }
+        return s;
+    }
+
 }
 
 class GameState {
@@ -852,7 +877,7 @@ function getLegalMoves(piece, gamestate, simulated = false) {
                 if (getPieceOn(row, col - 1, pieces) === null && getPieceOn(row, col - 2, pieces) === null && gamestate.shortCastlingAllowed) {
                     let rookPos = getLeftRookPosition(pieces);
 
-                    console.log("Rook position:" + rookPos);
+                    // console.log("Rook position:" + rookPos);
 
                     if (rookPos[0] !== -1 && getPieceOn(rookPos[0], rookPos[1] + 1, pieces) === null && getPieceOn(rookPos[0], rookPos[1] + 2, pieces) === null) {
                         legalMoves.push([row, col - 2]);
@@ -1189,8 +1214,8 @@ function gameOver(gamestate) {
         }
     }
 
-    console.log(numLegalMoves);
-    console.log("");
+    // console.log(numLegalMoves);
+    // console.log("");
     if (numLegalMoves === 0) return turn;
 }
 
