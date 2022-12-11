@@ -302,11 +302,24 @@ function whiteMove(gamestate) {
     // let gamePiecesCopy = JSON.parse(gamePiecesString);
 
     let [bestEval, piece, moveRow, moveCol] = negamax(gamestate, maxDepth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
-    if (bestEval < -9000) {
-        alert("I resign!");
-    }
+    // if (bestEval < -9000) {
+    //     alert("I resign!");
+    // }
     // if (logging) {
     console.log("Best evaluation: " + bestEval);
+    if (bestEval > 0) {
+        if (bestEval > 9000) {
+            document.getElementById("eval-value").innerHTML = "Forced mate for <b>white</b>";
+        } else {
+            document.getElementById("eval-value").innerHTML = "Evaluation: <b>+" + bestEval + "</b>";
+        }
+    } else {
+        if (bestEval < -9000) {
+            document.getElementById("eval-value").innerHTML = "Forced mate for <b>black</b>";
+        } else {
+            document.getElementById("eval-value").innerHTML = "Evaluation: <b>" + bestEval + "</b>";
+        }
+    }
     // }
     // let piece = getRandomPiece(gamestate);
     // let move = getLegalMoves(piece, gamestate)[0];
