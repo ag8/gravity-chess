@@ -1138,7 +1138,7 @@ function recordMove(selectedPiece, row, col, capture, oldCol, oldRow, special) {
         move++;
     }
 
-    let winner = gameOver();
+    let winner = gameOver(globalGameState);
 
     if (winner === 1) {
         currentMoveRecord = currentMoveRecord.slice(0, -1);
@@ -1172,18 +1172,18 @@ function updateOpeningDiv(openingName) {
     }
 }
 
-function gameOver() {
+function gameOver(gamestate) {
     /**
      * Returns the loser
      * @type {number}
      */
 
     let numLegalMoves = 0;
-    for (let piece of globalGameState.pieces) {
+    for (let piece of gamestate.pieces) {
         if (piece.color === 1 - turn) {
             // Sooo sketchy lol
             turn = 1 - turn;
-            let legalMoves = getLegalMoves(piece, globalGameState)
+            let legalMoves = getLegalMoves(piece, gamestate)
             turn = 1 - turn;
             numLegalMoves += legalMoves.length;
         }
