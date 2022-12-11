@@ -86,12 +86,14 @@ function negamax(gamestate, depth, alpha, beta, color) {
     if (depth === 0 || missingKing(gamestate) === color || missingKing(gamestate) === 1 - color) {
 
         /* begin logging */
-        let display = "";
-        for (let i = 0; i < (6 - depth + 1) * 6; i++) {
-            display += " ";
+        if (logging) {
+            let display = "";
+            for (let i = 0; i < (maxDepth - depth + 1) * 6; i++) {
+                display += " ";
+            }
+            display += "(" + evaluate(gamestate, color) + ")";
+            console.log(display);
         }
-        display += "(" + evaluate(gamestate, color) + ")";
-        console.log(display);
         /* end logging */
 
         return [evaluate(gamestate, color), null, null, null];
@@ -119,7 +121,7 @@ function negamax(gamestate, depth, alpha, beta, color) {
 
             let legalMoves = [];
             try {
-                legalMoves = getLegalMoves(potentialPiece, gameStateCopy, true);
+                legalMoves = getAllMoves(potentialPiece, gameStateCopy);
             } catch (e) {
                 console.log("bruh");
             }
@@ -134,23 +136,42 @@ function negamax(gamestate, depth, alpha, beta, color) {
                 attempts++;
 
                 /* Begin logging */
-                let pieceName = getPieceName(pieceToMove, capture, oldCol, oldRow),
-                    coordsName = getCoordsName(pieceToMove.row, pieceToMove.col),
-                    captureName = capture ? "x" : "", currentMoveRecord;
+                if (logging) {
+                    let pieceName = getPieceName(pieceToMove, capture, oldCol, oldRow),
+                        coordsName = getCoordsName(pieceToMove.row, pieceToMove.col),
+                        captureName = capture ? "x" : "", currentMoveRecord;
 
-                let moveName = pieceName + "" + captureName + "" + coordsName + " ";
+                    let moveName = pieceName + "" + captureName + "" + coordsName + " ";
 
-                let display = "";
-                for (let i = 0; i < (6 - depth) * 6; i++) {
-                    display += " ";
+                    let display = "" + color + ": ";
+                    for (let i = 0; i < (maxDepth - depth) * 6; i++) {
+                        display += " ";
+                    }
+                    display += moveName;
+
+                    console.log(display);
                 }
-                display += moveName;
-
-                console.log(display);
                 /* End logging */
 
                 // Evaluate the result
                 let child_negamax = 0 - negamax(nextState, depth - 1, 0 - beta, 0 - alpha, 1 - color)[0];
+
+                /* Begin logging */
+                if (logging) {
+                    let display = "" + color + ": ";
+                    for (let i = 0; i < (maxDepth - depth) * 6; i++) {
+                        display += " ";
+                    }
+                    display += "Eval: " + child_negamax;
+                    if (child_negamax >= value) {
+                        display += " >= " + value;
+                    } else {
+                        display += " < " + value;
+                    }
+
+                    console.log(display);
+                }
+                /* End logging */
 
                 hehe: if (child_negamax >= value) {
                     if (child_negamax === value) {
@@ -167,7 +188,7 @@ function negamax(gamestate, depth, alpha, beta, color) {
                     bestTarget = potentialMove;
 
                     alpha = Math.max(alpha, value);
-                    if (alpha >= beta) {
+                    if (alpha > beta) {
                         break dance;
                     }
 
@@ -203,18 +224,26 @@ function firstMove() {
     turn = 1 - turn;
 }
 
-let depth = 6;
+function startGame() {
+    maxDepth = window.prompt("Search depth? (plies)", 3);
+    firstMove();
+}
+
+let maxDepth = 3;
+let logging = false;
 
 function whiteMove(gamestate) {
     updateBoard();
     // let gamePiecesString = JSON.stringify(gamePieces);
     // let gamePiecesCopy = JSON.parse(gamePiecesString);
 
-    let [bestEval, piece, moveRow, moveCol] = negamax(gamestate, depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
+    let [bestEval, piece, moveRow, moveCol] = negamax(gamestate, maxDepth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
     if (bestEval < -9000) {
         alert("I resign!");
     }
-    console.log("Best evaluation: " + bestEval)
+    // if (logging) {
+    console.log("Best evaluation: " + bestEval);
+    // }
     // let piece = getRandomPiece(gamestate);
     // let move = getLegalMoves(piece, gamestate)[0];
     // let moveRow = move[0], moveCol = move[1];
@@ -240,22 +269,22 @@ function whiteMove(gamestate) {
 canvas.addEventListener('mousedown', function (e) {
     let [x, y] = getCursorPosition(canvas, e);
 
-    console.log("You clicked on " + x + ", " + y);
+    // console.log("You clicked on " + x + ", " + y);
 
     if (state === 0) {  // Selecting a piece
         // Detect whether this selected a piece
         selectedPiece = getSelectedPiece(x, y);
 
         if (selectedPiece == null) {
-            console.log("you clicked nowhere");
+            // console.log("you clicked nowhere");
             return;
         }
         if (selectedPiece.color !== turn) {
-            console.log("you clicked the other player's piece");
+            // console.log("you clicked the other player's piece");
             return;
         }
 
-        console.log("You chose the piece " + selectedPiece.type);
+        // console.log("You chose the piece " + selectedPiece.type);
 
         state = 1;
     } else if (state === 1) { // Selecting a square to move to

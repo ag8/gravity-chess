@@ -170,6 +170,8 @@
         </div>
         <div id="righteron">
             <p id="opening-name"></p>
+            <button onclick="startGame()">Begin</button>
+            <br/><br/>
             <button onclick="back()">Undo</button>
             <br/><br/>
             <button onclick="globalGameState.setGravityStyle(parseInt(window.prompt('Which gravity style do you want?\n(101 - normal, 102 - ender, 103 - left, 104 - right, 105 - alt, 106 - hokey)', '101')))">
@@ -229,6 +231,7 @@
 <script src="utils.js"></script>
 <script src="load.js"></script>
 <script src="game-base.js"></script>
+<script src="ai-utils.js"></script>
 <script src="ai-simple.js"></script>
 </body>
 </html>

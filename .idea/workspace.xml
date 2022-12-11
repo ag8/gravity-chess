@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added game state to game over detection">
-      <change afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ai.html" afterDir="false" />
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="working AI!">
+      <change afterPath="$PROJECT_DIR$/ai-utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/localhost-1670744210737.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/ai.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-base.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-base.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,16 +109,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/dyusha/fun_things/gravity-chess",
-    "settings.editor.selected.configurable": "Debugger_Data_Views_Java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dyusha/fun_things/gravity-chess&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Debugger_Data_Views_Java&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -187,7 +189,8 @@
       <workItem from="1666385734500" duration="3032000" />
       <workItem from="1670559630403" duration="2808000" />
       <workItem from="1670735386425" duration="8000" />
-      <workItem from="1670735454873" duration="7747000" />
+      <workItem from="1670735454873" duration="8707000" />
+      <workItem from="1670778062393" duration="3372000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -378,7 +381,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670736647281</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="some ai stuff">
+      <created>1670743230468</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1670743230468</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -433,8 +443,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="WOOOOOOOOOOOO!" />
-    <MESSAGE value="theory is working" />
     <MESSAGE value="theory is working!!" />
     <MESSAGE value="multiplauyer" />
     <MESSAGE value="works with refreshes now!!!" />
@@ -458,7 +466,9 @@
     <MESSAGE value="Fixes several casting issues, including fixing #12." />
     <MESSAGE value="Fixes #3." />
     <MESSAGE value="added game state to game over detection" />
-    <option name="LAST_COMMIT_MESSAGE" value="added game state to game over detection" />
+    <MESSAGE value="some ai stuff" />
+    <MESSAGE value="working AI!" />
+    <option name="LAST_COMMIT_MESSAGE" value="working AI!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -523,7 +533,7 @@
           <line>202</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
           <line>171</line>
           <option name="timeStamp" value="48" />
@@ -538,35 +548,31 @@
           <line>143</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>1259</line>
+          <line>1262</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <condition expression="missingKing(gamestate) != 74" language="JavaScript" />
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>99</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>123</line>
-          <properties lambdaOrdinal="-1" />
+          <line>125</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
           <line>960</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>182</line>
-          <properties lambdaOrdinal="-1" />
+          <line>203</line>
           <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint type="javascript">
+          <url>file://$PROJECT_DIR$/ai-simple.js</url>
+          <line>101</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
