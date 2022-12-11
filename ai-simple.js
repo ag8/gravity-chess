@@ -88,6 +88,20 @@ function evaluate(gamestate, color) {
         }
     }
 
+    // ceteris paribus, having more legal moves is better (more developed/open position)
+    let numLegalMoves = 0;
+    for (let piece of gamestate.pieces) {
+        if (piece.color === color) {
+            let legalMoves = getLegalMoves(piece, gamestate, true);
+            numLegalMoves += legalMoves.length;
+        } else {
+            let legalMoves = getLegalMoves(piece, gamestate, true);
+            numLegalMoves -= legalMoves.length;
+        }
+    }
+
+    sum += 0.01 * numLegalMoves;
+
     return sum;
 }
 
@@ -296,6 +310,9 @@ let lastWhiteMovedPieceFromCol = null;
 let lastWhiteMovedPieceToRow = null;
 let lastWhiteMovedPieceToCol = null;
 
+// Evaluation history
+let evals = [];
+
 function whiteMove(gamestate) {
     updateBoard();
     // let gamePiecesString = JSON.stringify(gamePieces);
@@ -306,7 +323,15 @@ function whiteMove(gamestate) {
     //     alert("I resign!");
     // }
     // if (logging) {
+    if (bestEval > 10) {
+        evals.push([move, 10]);
+    } else if (bestEval < -10) {
+        evals.push([move, -10]);
+    } else {
+        evals.push([move, bestEval]);
+    }
     console.log("Best evaluation: " + bestEval);
+    drawLineColors();
     if (bestEval > 0) {
         if (bestEval > 9000) {
             document.getElementById("eval-value").innerHTML = "Forced mate for <b>white</b>";
@@ -583,4 +608,32 @@ function drawBoard() {
             ctx.fillRect(i * SIZE, j * SIZE, SIZE, SIZE);
         }
     }
+}
+
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawLineColors);
+
+function drawLineColors() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'evaluation');
+
+    data.addRows(evals);
+
+    console.log("Data: " + data);
+
+    var options = {
+        hAxis: {
+            title: 'Move'
+        },
+        vAxis: {
+            title: 'Eval',
+            minValue: -10,
+            maxValue: 10,
+        },
+        colors: ['#a52714', '#097138']
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="more eval improvements">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ai-simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/ai.html" afterDir="false" />
@@ -187,7 +187,7 @@
       <workItem from="1670559630403" duration="2808000" />
       <workItem from="1670735386425" duration="8000" />
       <workItem from="1670735454873" duration="8707000" />
-      <workItem from="1670778062393" duration="7080000" />
+      <workItem from="1670778062393" duration="9390000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -420,7 +420,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670784613750</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="improvements">
+      <created>1670786755332</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1670786755332</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -475,7 +482,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="rewritten using gamestates" />
     <MESSAGE value="working legal moves with lookahead??" />
     <MESSAGE value="fixed illegal double pawn push through piece" />
     <MESSAGE value="added fixed legal move highlighting to multiplayer" />
@@ -500,7 +506,8 @@
     <MESSAGE value="colorinh" />
     <MESSAGE value="Improved evaluation function" />
     <MESSAGE value="more eval improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="more eval improvements" />
+    <MESSAGE value="improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="improvements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -587,7 +594,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>157</line>
+          <line>171</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -597,12 +604,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>240</line>
+          <line>254</line>
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
-          <line>133</line>
+          <line>147</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="78" />
         </line-breakpoint>
