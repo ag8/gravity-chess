@@ -188,10 +188,15 @@ function negamax(gamestate, depth, alpha, beta, color) {
                     bestTarget = potentialMove;
 
                     alpha = Math.max(alpha, value);
-                    if (alpha > beta) {
-                        break dance;
+                    if (speedUp) {
+                        if (alpha >= beta) {
+                            break dance;
+                        }
+                    } else {
+                        if (alpha > beta) {
+                            break dance;
+                        }
                     }
-
                 }
             }
         }
@@ -229,8 +234,29 @@ function startGame() {
     firstMove();
 }
 
+function speedItUp() {
+    speedUp = true;
+}
+
+function slowDown() {
+    speedUp = false;
+}
+
+function increaseDepth() {
+    maxDepth++;
+}
+
+function decreaseDepth() {
+    maxDepth--;
+}
+
+function debugMode() {
+    logging = true;
+}
+
 let maxDepth = 3;
 let logging = false;
+let speedUp = false;
 
 function whiteMove(gamestate) {
     updateBoard();
