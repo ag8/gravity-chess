@@ -561,10 +561,18 @@ function updateBoard(selectedPiece) {
 function drawBoard() {
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            if (j === lastWhiteMovedPieceFromRow && i === lastWhiteMovedPieceFromCol) {
-                ctx.fillStyle = '#89df70';
-            } else if (j === lastWhiteMovedPieceToRow && i === lastWhiteMovedPieceToCol) {
-                ctx.fillStyle = '#6db259';
+            if (lastWhiteMovedPieceFromCol != null) {
+                if (j === lastWhiteMovedPieceFromRow && i === lastWhiteMovedPieceFromCol) {
+                    ctx.fillStyle = '#89df70';
+                } else if (j === lastWhiteMovedPieceToRow && i === lastWhiteMovedPieceToCol) {
+                    ctx.fillStyle = '#6db259';
+                } else {
+                    if ((i + j) % 2 === 1) {
+                        ctx.fillStyle = '#bd663d';
+                    } else {
+                        ctx.fillStyle = '#f7b596';
+                    }
+                }
             } else {
                 if ((i + j) % 2 === 1) {
                     ctx.fillStyle = '#bd663d';

@@ -258,6 +258,12 @@ let maxDepth = 3;
 let logging = false;
 let speedUp = false;
 
+// Visualization variables
+let lastWhiteMovedPieceFromRow = null;
+let lastWhiteMovedPieceFromCol = null;
+let lastWhiteMovedPieceToRow = null;
+let lastWhiteMovedPieceToCol = null;
+
 function whiteMove(gamestate) {
     updateBoard();
     // let gamePiecesString = JSON.stringify(gamePieces);
@@ -274,11 +280,10 @@ function whiteMove(gamestate) {
     // let move = getLegalMoves(piece, gamestate)[0];
     // let moveRow = move[0], moveCol = move[1];
 
-    let lastWhiteMovedPieceFromRow = piece.row;
-    let lastWhiteMovedPieceFromCol = piece.col;
-    let lastWhiteMovedPieceToRow = moveRow;
-    let lastWhiteMovedPieceToCol = moveCol;
-
+    lastWhiteMovedPieceFromRow = piece.row;
+    lastWhiteMovedPieceFromCol = piece.col;
+    lastWhiteMovedPieceToRow = moveRow;
+    lastWhiteMovedPieceToCol = moveCol;
     // console.log("Evaluation: " + bestEval);
 
     // Actually complete the move!
@@ -506,4 +511,31 @@ function getFEN() {
     }
 
     return fen.substring(0, fen.length - 1);
+}
+
+function drawBoard() {
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            if (lastWhiteMovedPieceFromCol !== null) {
+                if (j === lastWhiteMovedPieceFromRow && i === lastWhiteMovedPieceFromCol) {
+                    ctx.fillStyle = '#89df70';
+                } else if (j === lastWhiteMovedPieceToRow && i === lastWhiteMovedPieceToCol) {
+                    ctx.fillStyle = '#6db259';
+                } else {
+                    if ((i + j) % 2 === 1) {
+                        ctx.fillStyle = '#bd663d';
+                    } else {
+                        ctx.fillStyle = '#f7b596';
+                    }
+                }
+            } else {
+                if ((i + j) % 2 === 1) {
+                    ctx.fillStyle = '#bd663d';
+                } else {
+                    ctx.fillStyle = '#f7b596';
+                }
+            }
+            ctx.fillRect(i * SIZE, j * SIZE, SIZE, SIZE);
+        }
+    }
 }

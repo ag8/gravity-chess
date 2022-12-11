@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="working AI!">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="options">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ai-simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/ai.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/ai-game.js" beforeDir="false" afterPath="$PROJECT_DIR$/old/ai-game.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +187,7 @@
       <workItem from="1670559630403" duration="2808000" />
       <workItem from="1670735386425" duration="8000" />
       <workItem from="1670735454873" duration="8707000" />
-      <workItem from="1670778062393" duration="3714000" />
+      <workItem from="1670778062393" duration="4271000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -392,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670781491350</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="options">
+      <created>1670781941445</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1670781941445</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -447,7 +454,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="theory is working!!" />
     <MESSAGE value="multiplauyer" />
     <MESSAGE value="works with refreshes now!!!" />
     <MESSAGE value="fix some multiplayer bugs" />
@@ -472,7 +478,8 @@
     <MESSAGE value="added game state to game over detection" />
     <MESSAGE value="some ai stuff" />
     <MESSAGE value="working AI!" />
-    <option name="LAST_COMMIT_MESSAGE" value="working AI!" />
+    <MESSAGE value="options" />
+    <option name="LAST_COMMIT_MESSAGE" value="options" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
