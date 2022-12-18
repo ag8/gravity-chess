@@ -102,6 +102,8 @@ class GameState {
             if (tryPiece.row === piece.row && tryPiece.col === piece.col && tryPiece.type === piece.type) {
                 tryPiece.row = toRow;
                 tryPiece.col = toCol;
+
+                return tryPiece;
             }
         }
     }
@@ -136,7 +138,7 @@ class GameState {
 
         // piece.row = toRow;
         // piece.col = toCol;
-        this.movePieceTo(piece, toRow, toCol);
+        piece = this.movePieceTo(piece, toRow, toCol);
 
         // Check for castling
         // Long
@@ -167,7 +169,13 @@ class GameState {
 
         // Check if the piece is a promoted pawn
         if (piece.color === 0 && piece.row === 7 && piece.type === PAWN || piece.color === 1 && piece.row === 0 && piece.type === PAWN) {
-            piece.type = askForPromotion();
+            // If we're in the real game, ask the player for a promotion.
+            // Otherwise, we're in a simulation, so just assume that we always promote to a queen.
+            if (this === globalGameState) {
+                piece.type = askForPromotion();
+            } else {
+                piece.type = QUEEN;
+            }
             if (numPieces <= this.pieces.length) {
                 special = getCoordsName(piece.row, piece.col) + "=" + getPieceName(piece, 0, 0).substring(0, 1);
             } else {
@@ -1244,9 +1252,6 @@ function getCoordsName(row, col) {
 }
 
 function askForPromotion() {
-    // TODO TEMPORARY
-    return QUEEN;
-
     console.log("PROMOTING");
 
     let valid = ["queen", "rook", "bishop", "knight"];
