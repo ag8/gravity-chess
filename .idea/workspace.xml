@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="improvements">
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added live game evaluations">
+      <change afterPath="$PROJECT_DIR$/puzzle-rush.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puzzle-rush.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai-simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/ai.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +128,7 @@
       <recent name="C:\development\gravity-chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.ai.html">
+  <component name="RunManager" selected="JavaScript Debug.puzzle-rush.html">
     <configuration name="ai.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/ai.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -141,16 +141,16 @@
     <configuration name="multiplayer.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/old/multiplayer.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="test.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/test.html" useBuiltInWebServerPort="true">
+    <configuration name="puzzle-rush.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/puzzle-rush.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JavaScript Debug.ai.html" />
+        <item itemvalue="JavaScript Debug.puzzle-rush.html" />
         <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.ai.html" />
         <item itemvalue="JavaScript Debug.game_index.html" />
         <item itemvalue="JavaScript Debug.multiplayer.html" />
-        <item itemvalue="JavaScript Debug.test.html" />
       </list>
     </recent_temporary>
   </component>
@@ -187,7 +187,11 @@
       <workItem from="1670559630403" duration="2808000" />
       <workItem from="1670735386425" duration="8000" />
       <workItem from="1670735454873" duration="8707000" />
-      <workItem from="1670778062393" duration="9390000" />
+      <workItem from="1670778062393" duration="10211000" />
+      <workItem from="1671346357791" duration="720000" />
+      <workItem from="1671761588115" duration="19000" />
+      <workItem from="1671763355223" duration="599000" />
+      <workItem from="1671849726952" duration="5147000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -427,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670786755332</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="added live game evaluations">
+      <created>1670802143043</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1670802143043</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -482,7 +493,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="working legal moves with lookahead??" />
     <MESSAGE value="fixed illegal double pawn push through piece" />
     <MESSAGE value="added fixed legal move highlighting to multiplayer" />
     <MESSAGE value="ender's game" />
@@ -507,7 +517,8 @@
     <MESSAGE value="Improved evaluation function" />
     <MESSAGE value="more eval improvements" />
     <MESSAGE value="improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="improvements" />
+    <MESSAGE value="added live game evaluations" />
+    <option name="LAST_COMMIT_MESSAGE" value="added live game evaluations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -569,27 +580,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>202</line>
+          <line>210</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>171</line>
+          <line>179</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/simple.js</url>
-          <line>119</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>143</line>
+          <line>145</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>1262</line>
+          <line>1267</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -599,7 +605,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>960</line>
+          <line>968</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -610,8 +616,12 @@
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ai-simple.js</url>
           <line>147</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/game-base.js</url>
+          <line>1218</line>
+          <option name="timeStamp" value="79" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
