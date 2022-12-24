@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added live game evaluations">
-      <change afterPath="$PROJECT_DIR$/puzzle-rush.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/puzzle-rush.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added puzzle rush">
+      <change beforePath="$PROJECT_DIR$/puzzle-rush.js" beforeDir="false" afterPath="$PROJECT_DIR$/puzzle-rush.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +189,7 @@
       <workItem from="1671346357791" duration="720000" />
       <workItem from="1671761588115" duration="19000" />
       <workItem from="1671763355223" duration="599000" />
-      <workItem from="1671849726952" duration="5147000" />
+      <workItem from="1671849726952" duration="5341000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -438,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670802143043</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="added puzzle rush">
+      <created>1671856269594</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1671856269594</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -493,7 +498,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed illegal double pawn push through piece" />
     <MESSAGE value="added fixed legal move highlighting to multiplayer" />
     <MESSAGE value="ender's game" />
     <MESSAGE value="fixed promotion" />
@@ -518,7 +522,8 @@
     <MESSAGE value="more eval improvements" />
     <MESSAGE value="improvements" />
     <MESSAGE value="added live game evaluations" />
-    <option name="LAST_COMMIT_MESSAGE" value="added live game evaluations" />
+    <MESSAGE value="added puzzle rush" />
+    <option name="LAST_COMMIT_MESSAGE" value="added puzzle rush" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

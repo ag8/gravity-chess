@@ -96,11 +96,11 @@ function runTurn() {
         }
     }
 
-    console.log("Potential moves: ")
-    console.log(potentialMoves)
+    // console.log("Potential moves: ")
+    // console.log(potentialMoves)
     let chosenMove = _.sample(potentialMoves);
-    console.log("Chose move:")
-    console.log(chosenMove)
+    // console.log("Chose move:")
+    // console.log(chosenMove)
 
     let [capture, oldCol, oldRow, special, newPieces] = globalGameState.movePiece(selectedPiece, chosenMove[0], chosenMove[1]);
     globalGameState.pieces = newPieces;
@@ -142,17 +142,17 @@ function begin() {
 }
 
 function loadGameRecord() {
-    console.log("Loading game record!");
+    // console.log("Loading game record!");
     let sections = gameRecord.split(". ");
     document.getElementById("game-record-flex").innerHTML = "";
     for (let i = 1; i < sections.length; i++) {
-        console.log("Looking at ")
+        // console.log("Looking at ")
         let plies = sections[i].split(" ");
         for (let j = 0; j < Math.min(plies.length, 2); j++) {
             if (plies[j].length === 0) {
                 continue;
             }
-            console.log("Loading ply " + plies[j] + ".");
+            // console.log("Loading ply " + plies[j] + ".");
             let div = document.createElement("div");
             div.className = "move-record";
             if (j === 0) {
@@ -203,7 +203,7 @@ for (let pair of queryString.entries()) {
 
 // Custom game pieces
 function createPiecesFromFen(fen) {
-    console.log("Creating!");
+    // console.log("Creating!");
     let pieces = [];
 
     let row = 0;
