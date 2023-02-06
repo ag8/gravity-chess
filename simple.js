@@ -158,7 +158,7 @@ function createPiecesFromFen(fen) {
     return pieces;
 }
 
-function getFEN() {
+function getGFEN() {
     let fen = "";
     let counter = 0;
 
@@ -212,4 +212,32 @@ function getFEN() {
     }
 
     return fen.substring(0, fen.length - 1);
+}
+
+function getFEN() {
+    let piecesFen = [...getGFEN()].reverse().join("");
+
+    let activeColor = turn === 0 ? 'w' : 'b';
+
+    let castlingData = "";
+    if (globalGameState.shortCastlingAllowed) {
+        castlingData += "K";
+    }
+    if (globalGameState.longCastlingAllowed) {
+        castlingData += "Q";
+    }
+    if (castlingData.length === 0) {
+        castlingData = "-";
+    }
+
+    let enPassantData = "-";
+    if (globalGameState.enPassantAllowed) {
+        enPassantData = getCoordsName(globalGameState.enPassantTargetRow, globalGameState.enPassantTargetCol);
+    }
+
+    let halfClock = 0;
+
+    let fullMove = move;
+
+    return piecesFen + " " + activeColor + " " + castlingData + " " + enPassantData + " " + halfClock + " " + fullMove;
 }

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="added puzzle rush">
-      <change beforePath="$PROJECT_DIR$/puzzle-rush.js" beforeDir="false" afterPath="$PROJECT_DIR$/puzzle-rush.js" afterDir="false" />
+    <list default="true" id="0b71a1cb-5798-494a-b089-c18ca2ed252e" name="Default Changelist" comment="less verbose">
+      <change afterPath="$PROJECT_DIR$/rust-ai-simple.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rust-ai.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-simple.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/simple.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +56,9 @@
         <option value="$PROJECT_DIR$/ai-game.js" />
       </list>
     </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="hqvra5ow" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -104,16 +112,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dyusha/fun_things/gravity-chess&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Debugger_Data_Views_Java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/dyusha/fun_things/gravity-chess",
+    "settings.editor.selected.configurable": "Debugger_Data_Views_Java"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -126,7 +134,7 @@
       <recent name="C:\development\gravity-chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.puzzle-rush.html">
+  <component name="RunManager" selected="JavaScript Debug.index.html">
     <configuration name="ai.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/gravity-chess/ai.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -144,8 +152,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JavaScript Debug.puzzle-rush.html" />
         <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.puzzle-rush.html" />
         <item itemvalue="JavaScript Debug.ai.html" />
         <item itemvalue="JavaScript Debug.game_index.html" />
         <item itemvalue="JavaScript Debug.multiplayer.html" />
@@ -189,7 +197,9 @@
       <workItem from="1671346357791" duration="720000" />
       <workItem from="1671761588115" duration="19000" />
       <workItem from="1671763355223" duration="599000" />
-      <workItem from="1671849726952" duration="5341000" />
+      <workItem from="1671849726952" duration="5477000" />
+      <workItem from="1675233790035" duration="14000" />
+      <workItem from="1675640391960" duration="2957000" />
     </task>
     <task id="LOCAL-00001" summary="Added proper move recording to the normal game">
       <created>1657398231193</created>
@@ -443,7 +453,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671856269594</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="less verbose">
+      <created>1671856357879</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1671856357879</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -498,7 +515,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added fixed legal move highlighting to multiplayer" />
     <MESSAGE value="ender's game" />
     <MESSAGE value="fixed promotion" />
     <MESSAGE value="implemented grav loading" />
@@ -523,7 +539,8 @@
     <MESSAGE value="improvements" />
     <MESSAGE value="added live game evaluations" />
     <MESSAGE value="added puzzle rush" />
-    <option name="LAST_COMMIT_MESSAGE" value="added puzzle rush" />
+    <MESSAGE value="less verbose" />
+    <option name="LAST_COMMIT_MESSAGE" value="less verbose" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -624,9 +641,9 @@
           <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/game-base.js</url>
-          <line>1218</line>
-          <option name="timeStamp" value="79" />
+          <url>file://$PROJECT_DIR$/puzzle-rush.js</url>
+          <line>112</line>
+          <option name="timeStamp" value="80" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

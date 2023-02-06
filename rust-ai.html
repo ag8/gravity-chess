@@ -170,7 +170,20 @@
         </div>
         <div id="righteron">
             <p id="opening-name"></p>
+            <p id="eval-value"></p>
+            <button onclick="startGame()">Begin</button>
+            <br/><br/>
             <button onclick="back()">Undo</button>
+            <br/><br/>
+            <button onclick="speedItUp();">Use worse evaluations (faster)</button>
+            <br/><br/>
+            <button onclick="slowDown();">Use better evaluations</button>
+            <br/><br/>
+            <button onclick="increaseDepth();">Increase search depth</button>
+            <br/><br/>
+            <button onclick="decreaseDepth();">Decrease search depth</button>
+            <br/><br/>
+            <button onclick="debugMode();">Enable debug mode</button>
             <br/><br/>
             <button onclick="globalGameState.setGravityStyle(parseInt(window.prompt('Which gravity style do you want?\n(101 - normal, 102 - ender, 103 - left, 104 - right, 105 - alt, 106 - hokey)', '101')))">
                 Set Gravity
@@ -178,14 +191,16 @@
             <br><br>
             <button onclick="copyTextToClipboard(gameRecord);">Copy game</button>
             <br/><br/>
-            <button onclick="copyTextToClipboard(getGFEN());">Copy gFEN</button>
-            <br/><br/>
             <button onclick="copyTextToClipboard(getFEN());">Copy FEN</button>
             <br/>
             <div id="game-record-flex">
             </div>
         </div>
     </div>
+</div>
+<script src="https://www.gstatic.com/charts/loader.js?ext.js="></script>
+<div id="eval-chart">
+    <div id="chart_div" style="width: 600px; height: 400px;"></div>
 </div>
 
 <div style="display:none;">
@@ -231,6 +246,7 @@
 <script src="utils.js"></script>
 <script src="load.js"></script>
 <script src="game-base.js"></script>
-<script src="simple.js"></script>
+<script src="ai-utils.js"></script>
+<script src="rust-ai-simple.js"></script>
 </body>
 </html>

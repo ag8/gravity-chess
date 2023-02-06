@@ -313,58 +313,99 @@ let lastWhiteMovedPieceToCol = null;
 // Evaluation history
 let evals = [];
 
+function parseBestMove(bestmove) {
+    let a = bestmove.charAt(0);
+    let b = bestmove.charAt(1);
+    let c = bestmove.charAt(2);
+    let d = bestmove.charAt(3);
+
+    let startCol = ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'].indexOf(a);
+    let startRow = parseInt(b, 10) - 1;
+    let endCol = ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'].indexOf(c);
+    let endRow = parseInt(d, 10) - 1;
+
+    return [startRow, startCol, endRow, endCol];
+}
+
 function whiteMove(gamestate) {
     updateBoard();
     // let gamePiecesString = JSON.stringify(gamePieces);
     // let gamePiecesCopy = JSON.parse(gamePiecesString);
+    let fetchURL = "http://146.190.60.169:8000/?fen=" + encodeURIComponent(getFEN());
+    console.log(fetchURL);
+    fetch(fetchURL).then(function (response) {
+        return response.text();
+    }).then(function (data) {
+        console.log(data);
 
-    let [bestEval, piece, moveRow, moveCol] = negamax(gamestate, maxDepth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0);
-    // if (bestEval < -9000) {
-    //     alert("I resign!");
-    // }
-    // if (logging) {
-    if (bestEval > 10) {
-        evals.push([move, 10]);
-    } else if (bestEval < -10) {
-        evals.push([move, -10]);
-    } else {
-        evals.push([move, bestEval]);
-    }
-    console.log("Best evaluation: " + bestEval);
-    drawLineColors();
-    if (bestEval > 0) {
-        if (bestEval > 9000) {
-            document.getElementById("eval-value").innerHTML = "Forced mate for <b>white</b>";
-        } else {
-            document.getElementById("eval-value").innerHTML = "Evaluation: <b>+" + bestEval + "</b>";
+        let bestMove = null;
+
+        let parts = data.split("\n");
+
+        let eval = 0;
+
+        for (let part of parts) {
+            if (part.startsWith("info")) {
+                console.log("[line] " + part);
+
+                if (part.includes("cp ")) {
+                    eval = parseInt(part.split("cp ")[1].split(" ")[0], 10) / 100;
+                }
+            }
+            if (part.startsWith("bestmove")) {
+                bestMove = part.split("bestmove ")[1];
+            }
         }
-    } else {
-        if (bestEval < -9000) {
-            document.getElementById("eval-value").innerHTML = "Forced mate for <b>black</b>";
+
+        let [startRow, startCol, moveRow, moveCol] = parseBestMove(bestMove);
+
+        let piece = getPieceOn(startRow, startCol, gamestate.pieces);
+
+        if (eval > 10) {
+            evals.push([move, 10]);
+        } else if (eval < -10) {
+            evals.push([move, -10]);
         } else {
-            document.getElementById("eval-value").innerHTML = "Evaluation: <b>" + bestEval + "</b>";
+            evals.push([move, eval]);
         }
-    }
-    // }
-    // let piece = getRandomPiece(gamestate);
-    // let move = getLegalMoves(piece, gamestate)[0];
-    // let moveRow = move[0], moveCol = move[1];
+        console.log("Best evaluation: " + eval);
+        drawLineColors();
+        if (eval > 0) {
+            if (eval > 9000) {
+                document.getElementById("eval-value").innerHTML = "Forced mate for <b>white</b>";
+            } else {
+                document.getElementById("eval-value").innerHTML = "Evaluation: <b>+" + eval + "</b>";
+            }
+        } else {
+            if (eval < -9000) {
+                document.getElementById("eval-value").innerHTML = "Forced mate for <b>black</b>";
+            } else {
+                document.getElementById("eval-value").innerHTML = "Evaluation: <b>" + eval + "</b>";
+            }
+        }
+        // }
+        // let piece = getRandomPiece(gamestate);
+        // let move = getLegalMoves(piece, gamestate)[0];
+        // let moveRow = move[0], moveCol = move[1];
 
-    lastWhiteMovedPieceFromRow = piece.row;
-    lastWhiteMovedPieceFromCol = piece.col;
-    lastWhiteMovedPieceToRow = moveRow;
-    lastWhiteMovedPieceToCol = moveCol;
-    // console.log("Evaluation: " + bestEval);
+        lastWhiteMovedPieceFromRow = piece.row;
+        lastWhiteMovedPieceFromCol = piece.col;
+        lastWhiteMovedPieceToRow = moveRow;
+        lastWhiteMovedPieceToCol = moveCol;
+        // console.log("Evaluation: " + bestEval);
 
-    // Actually complete the move!
-    let [capture, oldCol, oldRow, special, newPieces] = gamestate.movePiece(piece, moveRow, moveCol);
-    gamestate.pieces = newPieces;
+        // Actually complete the move!
+        let [capture, oldCol, oldRow, special, newPieces] = gamestate.movePiece(piece, moveRow, moveCol);
+        gamestate.pieces = newPieces;
 
-    gamestate.updateGravity();
+        gamestate.updateGravity();
 
-    recordMove(piece, moveRow, moveCol, capture, oldCol, oldRow, special);
+        recordMove(piece, moveRow, moveCol, capture, oldCol, oldRow, special);
 
-    return piece;
+        return piece;
+    }).catch(function (err) {
+        console.log('Fetch Error :-S', err);
+    });
 }
 
 canvas.addEventListener('mousedown', function (e) {
@@ -526,6 +567,7 @@ function createPiecesFromFen(fen) {
 
     return pieces;
 }
+
 
 function getGFEN() {
     let fen = "";
